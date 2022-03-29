@@ -10,6 +10,6 @@ class ServersBuilder
     /** @return Server[] */
     public function build()
     {
-
+        return [];
     }
 }

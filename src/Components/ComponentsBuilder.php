@@ -7,9 +7,8 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Components;
 
 class ComponentsBuilder
 {
-    /** @return Components[] */
-    public function build()
+    public function build(): ?Components
     {
-
+        return null;
     }
 }

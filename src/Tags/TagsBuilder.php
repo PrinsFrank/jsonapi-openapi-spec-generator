@@ -10,6 +10,6 @@ class TagsBuilder
     /** @return Tag[] */
     public function build(): array
     {
-
+        return [];
     }
 }

@@ -10,6 +10,6 @@ class SecurityBuilder
     /** @return SecurityRequirement[] */
     public function build()
     {
-
+        return [];
     }
 }

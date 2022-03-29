@@ -7,9 +7,8 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Info;
 
 class InfoBuilder
 {
-    /** @return Info[] */
-    public function build()
+    public function build(): ?Info
     {
-
+        return null;
     }
 }

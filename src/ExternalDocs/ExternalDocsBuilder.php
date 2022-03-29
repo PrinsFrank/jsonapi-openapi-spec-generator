@@ -7,9 +7,8 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\ExternalDocs;
 
 class ExternalDocsBuilder
 {
-    /** @return ExternalDocs[] */
-    public function build(): array
+    public function build(): ?ExternalDocs
     {
-
+        return null;
     }
 }

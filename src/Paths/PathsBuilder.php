@@ -10,6 +10,6 @@ class PathsBuilder
     /** @return PathItem[] */
     public function build()
     {
-
+        return [];
     }
 }

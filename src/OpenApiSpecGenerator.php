@@ -29,11 +29,11 @@ class OpenApiSpecGenerator
         return OpenApi::create()
             ->openapi(OpenApi::OPENAPI_3_0_2)
             ->tags(...$this->tagsBuilder->build())
-            ->externalDocs(...$this->externalDocsBuilder->build())
-            ->info(...$this->infoBuilder->build())
+            ->externalDocs($this->externalDocsBuilder->build())
+            ->info($this->infoBuilder->build())
             ->servers(...$this->serversBuilder->build())
             ->security(...$this->securityBuilder->build())
             ->paths(...$this->pathsBuilder->build())
-            ->components(...$this->componentsBuilder->build());
+            ->components($this->componentsBuilder->build());
     }
 }
