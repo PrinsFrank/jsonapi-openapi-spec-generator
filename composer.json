@@ -5,12 +5,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Prinsfrank\\JsonapiOpenapiSpecGenerator\\": "src/"
+            "PrinsFrank\\JsonapiOpenapiSpecGenerator\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Prinsfrank\\JsonapiOpenapiSpecGenerator\\Tests\\": "tests/"
+            "PrinsFrank\\JsonapiOpenapiSpecGenerator\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Prinsfrank\\JsonapiOpenapiSpecGenerator\\SpecGeneratorServiceProvider"
+                "PrinsFrank\\JsonapiOpenapiSpecGenerator\\OpenApiSpecGeneratorServiceProvider"
             ]
         }
     }

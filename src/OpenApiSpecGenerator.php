@@ -12,7 +12,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Security\SecurityBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Servers\ServersBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tags\TagsBuilder;
 
-class SpecGenerator
+class OpenApiSpecGenerator
 {
     public function __construct(
         private TagsBuilder $tagsBuilder,

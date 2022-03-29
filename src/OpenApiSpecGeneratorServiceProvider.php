@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator;
 
+use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Components\ComponentsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\ExternalDocs\ExternalDocsBuilder;
@@ -12,14 +14,14 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Security\SecurityBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Servers\ServersBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tags\TagsBuilder;
 
-class SpecGeneratorServiceProvider extends ServiceProvider
+class OpenApiSpecGeneratorServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public function register(): void
     {
         $this->app->singleton(
-            SpecGenerator::class,
-            static function () {
-                return new SpecGenerator(
+            OpenApiSpecGenerator::class,
+            static function (Application $application) {
+                return new OpenApiSpecGenerator(
                     new TagsBuilder(),
                     new ExternalDocsBuilder(),
                     new InfoBuilder(),
@@ -30,5 +32,12 @@ class SpecGeneratorServiceProvider extends ServiceProvider
                 );
             }
         );
+    }
+
+    public function provides(): array
+    {
+        return [
+            OpenApiSpecGenerator::class
+        ];
     }
 }
