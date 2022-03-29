@@ -14,6 +14,14 @@
         }
     },
     "require": {
-        "laravel-json-api/laravel": "^2.1"
+        "laravel-json-api/laravel": "^2.1",
+        "illuminate/support": "^9.6"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SpecGeneratorServiceProvider"
+            ]
+        }
     }
 }
