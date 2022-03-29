@@ -1,0 +1,19 @@
+{
+    "name": "prinsfrank/jsonapi-openapi-spec-generator",
+    "description": "Generate OpenAPI specifications for JSON:API's",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Prinsfrank\\JsonapiOpenapiSpecGenerator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Prinsfrank\\JsonapiOpenapiSpecGenerator\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "laravel-json-api/laravel": "^2.1"
+    }
+}
