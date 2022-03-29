@@ -10,6 +10,7 @@ use LaravelJsonApi\Core\Support\AppResolver;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Components\ComponentsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\ClassNotFoundException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\InvalidServerException;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\JsonapiOpenapiSpecGeneratorException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\MissingConfigurationException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\VersionNotFoundException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\ExternalDocs\ExternalDocsBuilder;
@@ -33,10 +34,7 @@ class OpenApiSpecGenerator
     ) { }
 
     /**
-     * @throws MissingConfigurationException
-     * @throws VersionNotFoundException
-     * @throws InvalidServerException
-     * @throws ClassNotFoundException
+     * @throws JsonapiOpenapiSpecGeneratorException
      */
     public function generate(string $serverName): OpenApi
     {
