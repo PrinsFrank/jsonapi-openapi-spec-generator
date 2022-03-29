@@ -8,15 +8,16 @@ use Illuminate\Foundation\Application;
 use LaravelJsonApi\Core\Server\Server;
 use LaravelJsonApi\Core\Support\AppResolver;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Components\ComponentsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\ClassNotFoundException;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\InvalidServerException;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\MissingConfigurationException;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\VersionNotFoundException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\ExternalDocs\ExternalDocsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Info\InfoBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Paths\PathsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Security\SecurityBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Servers\ServersBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tags\TagsBuilder;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use RuntimeException;
 
 class OpenApiSpecGenerator
 {
@@ -32,25 +33,31 @@ class OpenApiSpecGenerator
     ) { }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @throws MissingConfigurationException
+     * @throws VersionNotFoundException
+     * @throws InvalidServerException
+     * @throws ClassNotFoundException
      */
     public function generate(string $serverName): OpenApi
     {
         $apiVersions = config('jsonapi.servers');
         if (is_array($apiVersions) === false) {
-            throw new RuntimeException('No api versions configured for jsonapi.servers configuration key');
+            throw new MissingConfigurationException('No api versions configured for jsonapi.servers configuration key');
         }
 
         $apiVersionFQN = config('jsonapi.servers.' . $serverName);
-        if ($apiVersionFQN === null || class_exists($apiVersionFQN) === false) {
-            throw new RuntimeException('Invalid api server "' . $apiVersionFQN . '" for "' . $serverName . '"');
+        if ($apiVersionFQN === null) {
+            throw new VersionNotFoundException('No api server configured with name "' . $serverName . '"');
+        }
+
+        if (class_exists($apiVersionFQN) === false) {
+            throw new ClassNotFoundException('Api server class "' . $apiVersionFQN . '" for "' . $serverName . '" doesn\'t exist');
         }
 
         $appResolver = $this->application->get(AppResolver::class);
         $server = new $apiVersionFQN($appResolver, $serverName);
         if ($server instanceof Server === false) {
-            throw new RuntimeException('Server is not an instance of "' . Server::class . '"');
+            throw new InvalidServerException('Server is not an instance of "' . Server::class . '"');
         }
 
         return OpenApi::create()
