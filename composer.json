@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "SpecGeneratorServiceProvider"
+                "Prinsfrank\\JsonapiOpenapiSpecGenerator\\SpecGeneratorServiceProvider"
             ]
         }
     }
