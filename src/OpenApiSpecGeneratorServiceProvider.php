@@ -6,6 +6,7 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use LaravelJsonApi\Core\Support\AppResolver;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Components\ComponentsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\ExternalDocs\ExternalDocsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Info\InfoBuilder;
@@ -22,6 +23,7 @@ class OpenApiSpecGeneratorServiceProvider extends ServiceProvider implements Def
             OpenApiSpecGenerator::class,
             static function (Application $application) {
                 return new OpenApiSpecGenerator(
+                    $application,
                     new TagsBuilder(),
                     new ExternalDocsBuilder(),
                     new InfoBuilder(),
