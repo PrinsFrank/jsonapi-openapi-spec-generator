@@ -8,7 +8,7 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Server;
 class ServersBuilder
 {
     /** @return Server[] */
-    public function build()
+    public function build(\LaravelJsonApi\Core\Server\Server $server)
     {
         return [];
     }
