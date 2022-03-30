@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Paths;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\PathItem;
 

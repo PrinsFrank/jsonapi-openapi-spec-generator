@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Components;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Components;
 

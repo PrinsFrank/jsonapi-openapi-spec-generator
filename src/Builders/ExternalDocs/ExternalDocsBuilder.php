@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\ExternalDocs;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\ExternalDocs;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ExternalDocs;
 

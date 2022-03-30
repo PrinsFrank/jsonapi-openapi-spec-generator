@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Tags;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Tags;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Tag;
 

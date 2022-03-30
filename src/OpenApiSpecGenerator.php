@@ -7,18 +7,18 @@ use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
 use Illuminate\Foundation\Application;
 use LaravelJsonApi\Core\Server\Server;
 use LaravelJsonApi\Core\Support\AppResolver;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Components\ComponentsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\ComponentsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\ClassNotFoundException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\InvalidServerException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\JsonapiOpenapiSpecGeneratorException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\MissingConfigurationException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\VersionNotFoundException;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\ExternalDocs\ExternalDocsBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Info\InfoBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Paths\PathsBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Security\SecurityBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Servers\ServersBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Tags\TagsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\ExternalDocs\ExternalDocsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Info\InfoBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\PathsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Security\SecurityBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\ServersBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Tags\TagsBuilder;
 
 class OpenApiSpecGenerator
 {

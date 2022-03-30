@@ -6,13 +6,13 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Components\ComponentsBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\ExternalDocs\ExternalDocsBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Info\InfoBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Paths\PathsBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Security\SecurityBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Servers\ServersBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Tags\TagsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\ComponentsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\ExternalDocs\ExternalDocsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Info\InfoBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\PathsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Security\SecurityBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\ServersBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Tags\TagsBuilder;
 
 class OpenApiSpecGeneratorServiceProvider extends ServiceProvider implements DeferrableProvider
 {

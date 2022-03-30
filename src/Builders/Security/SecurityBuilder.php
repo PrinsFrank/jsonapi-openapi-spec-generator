@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Security;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Security;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\SecurityRequirement;
 
