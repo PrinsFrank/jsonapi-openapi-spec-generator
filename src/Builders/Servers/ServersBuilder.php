@@ -6,10 +6,12 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Server as ServerDocumentation;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerAttribute;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerDomain;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerEnvironment;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerPattern;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerPortNumber;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerProtocol;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\Attribute\ServerDomainBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\Attribute\ServerEnvironmentBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\Attribute\ServerPortNumberBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\Attribute\ServerProtocolBuilder;
@@ -46,6 +48,7 @@ class ServersBuilder
                 OpenApiServerEnvironment::class => ServerEnvironmentBuilder::build($documentation, $attribute),
                 OpenApiServerPortNumber::class => ServerPortNumberBuilder::build($documentation, $attribute),
                 OpenApiServerProtocol::class => ServerProtocolBuilder::build($documentation, $attribute),
+                OpenApiServerDomain::class => ServerDomainBuilder::build($documentation, $attribute),
                 default => throw new AttributeNotSupportedException(get_class($attribute))
             };
         }

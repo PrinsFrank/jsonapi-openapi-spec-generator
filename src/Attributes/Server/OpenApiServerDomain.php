@@ -6,7 +6,13 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
 use Attribute;
 
 #[Attribute]
-class OpenApiServerDomain
+class OpenApiServerDomain implements OpenApiServerAttribute
 {
-    public function __construct(string $domain) { }
+    /** @var string[] */
+    public array $domains;
+
+    public function __construct(string ... $domains)
+    {
+        $this->domains = $domains;
+    }
 }

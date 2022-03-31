@@ -27,6 +27,16 @@ class UrlBuilder
             }
         }
 
+        preg_match_all('/{[^}]*?([A-z]+)[^}]*?}/', $serverPattern, $remainingVariableDefinitions);
+        foreach ($remainingVariableDefinitions[1] ?? [] as $remainingVariableDefinition) {
+            $existingVariables = array_map(static function ($variable) {return $variable->objectId;}, $variables);
+            if (in_array($remainingVariableDefinition, $existingVariables, true)) {
+                continue;
+            }
+
+            $serverPattern = preg_replace('/{[^}]*' . $remainingVariableDefinition . '[^}]*}/', '', $serverPattern);
+        }
+
         return $serverDocumentation->variables(... $variablesWithOptions)->url($serverPattern);
     }
 }
