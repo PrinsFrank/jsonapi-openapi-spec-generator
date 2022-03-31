@@ -13,8 +13,8 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerEnviro
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerPattern;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerPortNumber;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerProtocol;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\AttributeNotSupportedException;
 use ReflectionClass;
+use ReflectionException;
 
 class ServersBuilder
 {
@@ -22,7 +22,7 @@ class ServersBuilder
 
     /**
      * @return ServerDocumentation[]
-     * @throws AttributeNotSupportedException
+     * @throws ReflectionException
      */
     public function build(Server $server): array
     {
@@ -34,7 +34,7 @@ class ServersBuilder
         $baseUri = $reflectionServer->getProperty('baseUri')->getValue($server);
         foreach ($reflectionServer->getAttributes() as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
-            if ($attribute instanceof OpenApiServerAttribute === false) {
+            if ($attribute instanceof OpenApiServerAttribute === false || count($attribute->enum) === 0) {
                 continue;
             }
 
