@@ -9,7 +9,7 @@ use LaravelJsonApi\Core\Server\Server;
 class PathsBuilder
 {
     /** @return PathItem[] */
-    public function build(Server $server)
+    public function build(Server $server): array
     {
         return [];
     }
