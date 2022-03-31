@@ -5,7 +5,7 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
 
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\OpenApiAttribute;
 
-interface OpenApiServerAttribute extends OpenApiAttribute
+interface OpenApiPathAttribute extends OpenApiAttribute
 {
     public function description(): string;
 

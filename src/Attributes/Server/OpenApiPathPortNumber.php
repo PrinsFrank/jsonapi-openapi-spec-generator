@@ -6,21 +6,21 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
 use Attribute;
 
 #[Attribute]
-class OpenApiServerProtocol implements OpenApiServerAttribute
+class OpenApiPathPortNumber implements OpenApiPathAttribute
 {
-    public const OBJECT_ID = 'protocol';
+    public const OBJECT_ID = 'port_number';
 
-    /** @var string[] */
+    /** @var int[] */
     public array $enum;
 
-    public function __construct(string ...$protocols)
+    public function __construct(int ... $portNumbers)
     {
-        $this->enum = $protocols;
+        $this->enum = $portNumbers;
     }
 
     public function description(): string
     {
-        return 'The protocol';
+        return 'The port number';
     }
 
     public function objectId(): string

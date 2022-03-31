@@ -6,21 +6,21 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
 use Attribute;
 
 #[Attribute]
-class OpenApiServerDomain implements OpenApiServerAttribute
+class OpenApiPathBaseUri implements OpenApiPathAttribute
 {
-    public const OBJECT_ID = 'domain';
+    public const OBJECT_ID = 'base_uri';
 
     /** @var string[] */
     public array $enum;
 
-    public function __construct(string ... $domains)
+    public function __construct(string ... $baseUris)
     {
-        $this->enum = $domains;
+        $this->enum = $baseUris;
     }
 
     public function description(): string
     {
-        return 'The server domain';
+        return 'The base uri';
     }
 
     public function objectId(): string

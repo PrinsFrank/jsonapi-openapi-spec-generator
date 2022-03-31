@@ -6,7 +6,7 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
 use Attribute;
 
 #[Attribute]
-class OpenApiServerPattern implements OpenApiServerAttribute
+class OpenApiPathPattern implements OpenApiPathAttribute
 {
     public const OBJECT_ID = 'pattern';
 

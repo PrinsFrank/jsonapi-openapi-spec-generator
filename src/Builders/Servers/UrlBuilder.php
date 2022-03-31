@@ -5,7 +5,7 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Server as ServerDocumentation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ServerVariable;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerBaseUri;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathBaseUri;
 
 class UrlBuilder
 {
@@ -34,8 +34,8 @@ class UrlBuilder
                 continue;
             }
 
-            if ($remainingVariableDefinition === OpenApiServerBaseUri::OBJECT_ID) {
-                $serverPattern = preg_replace('/{(?<prefix>[^}]*)' . OpenApiServerBaseUri::OBJECT_ID. '(?<suffix>[^}]*)}/', '${1}' . $baseUri . '${2}', $serverPattern);
+            if ($remainingVariableDefinition === OpenApiPathBaseUri::OBJECT_ID) {
+                $serverPattern = preg_replace('/{(?<prefix>[^}]*)' . OpenApiPathBaseUri::OBJECT_ID. '(?<suffix>[^}]*)}/', '${1}' . $baseUri . '${2}', $serverPattern);
                 continue;
             }
 

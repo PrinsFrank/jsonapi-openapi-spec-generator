@@ -6,19 +6,19 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Server as ServerDocumentation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ServerVariable;
 use LaravelJsonApi\Core\Server\Server;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerAttribute;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerBaseUri;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerDomain;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerEnvironment;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerPattern;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerPortNumber;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerProtocol;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathBaseUri;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathDomain;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathAttribute;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathEnvironment;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathPattern;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathPortNumber;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathProtocol;
 use ReflectionClass;
 use ReflectionException;
 
 class ServersBuilder
 {
-    public const SERVER_PATTERN = '{' . OpenApiServerProtocol::OBJECT_ID . '://}{' . OpenApiServerEnvironment::OBJECT_ID . '.}{' . OpenApiServerDomain::OBJECT_ID . '}{:' . OpenApiServerPortNumber::OBJECT_ID . '}{' . OpenApiServerBaseUri::OBJECT_ID . '}';
+    public const SERVER_PATTERN = '{' . OpenApiPathProtocol::OBJECT_ID . '://}{' . OpenApiPathEnvironment::OBJECT_ID . '.}{' . OpenApiPathDomain::OBJECT_ID . '}{:' . OpenApiPathPortNumber::OBJECT_ID . '}{' . OpenApiPathBaseUri::OBJECT_ID . '}';
 
     /**
      * @return ServerDocumentation[]
@@ -34,11 +34,11 @@ class ServersBuilder
         $baseUri = $reflectionServer->getProperty('baseUri')->getValue($server);
         foreach ($reflectionServer->getAttributes() as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
-            if ($attribute instanceof OpenApiServerAttribute === false || count($attribute->enum) === 0) {
+            if ($attribute instanceof OpenApiPathAttribute === false || count($attribute->enum) === 0) {
                 continue;
             }
 
-            if ($attribute instanceof OpenApiServerPattern) {
+            if ($attribute instanceof OpenApiPathPattern) {
                 $serverPattern = $attribute->pattern;
 
                 continue;
