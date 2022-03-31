@@ -7,5 +7,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\OpenApiAttribute;
 
 interface OpenApiServerAttribute extends OpenApiAttribute
 {
+    public function description(): string;
 
+    public function objectId(): string;
 }

@@ -8,11 +8,23 @@ use Attribute;
 #[Attribute]
 class OpenApiServerEnvironment implements OpenApiServerAttribute
 {
+    public const OBJECT_ID = 'environment';
+
     /** @var string[] */
-    public array $environments;
+    public array $enum;
 
     public function __construct(string ...$environments)
     {
-        $this->environments = $environments;
+        $this->enum = $environments;
+    }
+
+    public function description(): string
+    {
+        return 'The server domain';
+    }
+
+    public function objectId(): string
+    {
+        return self::OBJECT_ID;
     }
 }
