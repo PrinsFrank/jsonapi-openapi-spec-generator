@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
 
+use Attribute;
+
+#[Attribute]
 class OpenApiServerBaseUri implements OpenApiServerAttribute
 {
     public const OBJECT_ID = 'base_uri';
