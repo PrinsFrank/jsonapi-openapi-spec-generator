@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\ExternalDocs;
 
 use Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\OpenApiAttribute;

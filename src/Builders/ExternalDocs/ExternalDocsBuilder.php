@@ -5,7 +5,7 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\ExternalDocs;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ExternalDocs;
 use LaravelJsonApi\Core\Server\Server;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiExternalDocs;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\ExternalDocs\OpenApiExternalDocs;
 use ReflectionClass;
 
 class ExternalDocsBuilder

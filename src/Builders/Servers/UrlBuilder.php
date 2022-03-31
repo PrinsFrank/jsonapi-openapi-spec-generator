@@ -5,7 +5,7 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Server as ServerDocumentation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ServerVariable;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiPathBaseUri;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathBaseUri;
 
 class UrlBuilder
 {

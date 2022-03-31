@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path;
 
 use Attribute;
 
