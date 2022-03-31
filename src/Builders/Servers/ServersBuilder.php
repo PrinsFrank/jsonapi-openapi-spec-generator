@@ -7,6 +7,7 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Server as ServerDocumentation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ServerVariable;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerAttribute;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerBaseUri;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerDomain;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerEnvironment;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\OpenApiServerPattern;
@@ -17,7 +18,7 @@ use ReflectionClass;
 
 class ServersBuilder
 {
-    public const SERVER_PATTERN = '{' . OpenApiServerProtocol::OBJECT_ID . '://}{' . OpenApiServerEnvironment::OBJECT_ID . '.}{' . OpenApiServerDomain::OBJECT_ID . '}{:' . OpenApiServerPortNumber::OBJECT_ID . '}';
+    public const SERVER_PATTERN = '{' . OpenApiServerProtocol::OBJECT_ID . '://}{' . OpenApiServerEnvironment::OBJECT_ID . '.}{' . OpenApiServerDomain::OBJECT_ID . '}{:' . OpenApiServerPortNumber::OBJECT_ID . '}{' . OpenApiServerBaseUri::OBJECT_ID . '}';
 
     /**
      * @return ServerDocumentation[]
@@ -29,7 +30,9 @@ class ServersBuilder
         $serverPattern = static::SERVER_PATTERN;
 
         $variables = [];
-        foreach ((new ReflectionClass($server))->getAttributes() as $reflectionAttribute) {
+        $reflectionServer = (new ReflectionClass($server));
+        $baseUri = $reflectionServer->getProperty('baseUri')->getValue($server);
+        foreach ($reflectionServer->getAttributes() as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
             if ($attribute instanceof OpenApiServerAttribute === false) {
                 continue;
@@ -48,6 +51,6 @@ class ServersBuilder
                 ->description($attribute->description());
         }
 
-        return [UrlBuilder::build($documentation, $variables, $serverPattern)];
+        return [UrlBuilder::build($documentation, $variables, $serverPattern, $baseUri)];
     }
 }
