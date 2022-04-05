@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator;
 
 use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Core\Server\Server;
 use LaravelJsonApi\Core\Support\AppResolver;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\ComponentsBuilder;
@@ -58,6 +60,8 @@ class OpenApiSpecGenerator
             throw new InvalidServerException('Server is not an instance of "' . Server::class . '"');
         }
 
+        $router = $this->application->get(Route::class);
+        $urlGenerator = $this->application->make(UrlGenerator::class);
         return OpenApi::create()
             ->openapi(OpenApi::OPENAPI_3_0_2)
             ->tags(...$this->tagsBuilder->build($server))
@@ -65,7 +69,7 @@ class OpenApiSpecGenerator
             ->info($this->infoBuilder->build($server))
             ->servers(...$this->serversBuilder->build($server))
             ->security(...$this->securityBuilder->build($server))
-            ->paths(...$this->pathsBuilder->build($server))
+            ->paths(...$this->pathsBuilder->build($server, $router, $urlGenerator))
             ->components($this->componentsBuilder->build($server));
     }
 }
