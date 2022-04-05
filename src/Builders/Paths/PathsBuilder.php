@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths;
 
-use GoldSpecDigital\ObjectOrientedOAS\Objects\Example;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Operation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\PathItem;
+use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Routing\Route as IlluminateRoute;
@@ -24,8 +24,18 @@ class PathsBuilder
                 continue;
             }
 
+            preg_match_all('/{[A-z0-9]+}/', $route->uri(), $routeParamNames, PREG_PATTERN_ORDER);
+            $routeParams = [];
+            foreach ($routeParamNames[0] as $routeParamName) {
+                $routeParams[] = (new Parameter())
+                    ->in('path')
+                    ->name(trim($routeParamName, '{}'))
+                    ->schema((new Schema())->type('integer'))
+                    ->required(true);
+            }
+
             foreach ($route->methods as $method) {
-                $operationsForUri[$route->uri()][] = (new Operation())->action($method);
+                $operationsForUri[$route->uri()][] = (new Operation())->action(strtolower($method))->parameters(... $routeParams);
             }
         }
 
