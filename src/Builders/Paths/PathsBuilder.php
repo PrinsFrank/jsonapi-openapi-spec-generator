@@ -9,6 +9,9 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Routing\Route as IlluminateRoute;
 use LaravelJsonApi\Core\Server\Server;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiHideMethod;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiHideController;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder;
 
@@ -21,6 +24,10 @@ class PathsBuilder
         foreach ($router::getRoutes() as $route) {
             /** @var IlluminateRoute $route */
             if (str_starts_with($urlGenerator->to($route->uri()), $server->url()) === false) {
+                continue;
+            }
+
+            if (Attribute::classHas($route->getController(), OpenApiHideController::class) || Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiHideMethod::class)) {
                 continue;
             }
 
