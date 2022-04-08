@@ -9,6 +9,7 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Routing\Route as IlluminateRoute;
 use LaravelJsonApi\Core\Server\Server;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder;
 
 class PathsBuilder
@@ -24,7 +25,10 @@ class PathsBuilder
             }
 
             foreach ($route->methods as $method) {
-                $operationsForUri[$route->uri()][] = (new Operation())->action(strtolower($method))->parameters(...RouteParamsBuilder::build($route));
+                $operationsForUri[$route->uri()][] = (new Operation())
+                    ->action(strtolower($method))
+                    ->parameters(...RouteParamsBuilder::build($route))
+                    ->responses(...ResponsesBuilder::build($server, $route));
             }
         }
 
