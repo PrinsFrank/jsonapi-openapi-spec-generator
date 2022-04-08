@@ -18,9 +18,9 @@ class ResponsesBuilder
     public static function build(Server $server, Route $route): array
     {
         $serverName = $server->name();
-        $type       = array_filter($server->schemas()->types(), static function ($type) use ($serverName, $route) {
+        $type       = array_values(array_filter($server->schemas()->types(), static function ($type) use ($serverName, $route) {
                 return str_starts_with($route->getAction('as') ?? '', $serverName . '.' . $type);
-            })[0] ?? null;
+            }))[0] ?? null;
         if ($type === null) {
             return [];
         }
