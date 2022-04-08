@@ -7,6 +7,7 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Contact;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Info;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\License;
 use LaravelJsonApi\Core\Server\Server;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiContact;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiDescription;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiInfoAttribute;
@@ -14,7 +15,6 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiLicense
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiTermsOfService;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiTitle;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiVersion;
-use ReflectionClass;
 
 class InfoBuilder
 {
@@ -22,7 +22,7 @@ class InfoBuilder
     {
         $info = new Info();
         $hasAttribute = false;
-        foreach ((new ReflectionClass($server))->getAttributes() as $reflectionAttribute) {
+        foreach (Attribute::allForClass($server) as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
             if ($attribute instanceof OpenApiInfoAttribute === false) {
                 continue;

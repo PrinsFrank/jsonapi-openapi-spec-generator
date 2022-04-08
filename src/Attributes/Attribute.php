@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes;
 
+use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -28,5 +29,29 @@ class Attribute
         }
 
         return false;
+    }
+
+    /**
+     * @return ReflectionAttribute[]
+     */
+    public static function allForClass(object|string $class): array
+    {
+        return self::all(new ReflectionClass($class));
+    }
+
+    /**
+     * @return ReflectionAttribute[]
+     */
+    public static function allForMethod(object|string $class, string $method): array
+    {
+        return self::all(new ReflectionMethod($class, $method));
+    }
+
+    /**
+     * @return ReflectionAttribute[]
+     */
+    public static function all(ReflectionClass|ReflectionMethod $reflection): array
+    {
+        return $reflection->getAttributes();
     }
 }

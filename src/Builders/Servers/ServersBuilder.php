@@ -6,6 +6,7 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Server as ServerDocumentation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ServerVariable;
 use LaravelJsonApi\Core\Server\Server;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathBaseUri;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathDomain;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathAttribute;
@@ -30,9 +31,8 @@ class ServersBuilder
         $serverPattern = static::SERVER_PATTERN;
 
         $variables = [];
-        $reflectionServer = (new ReflectionClass($server));
-        $baseUri = $reflectionServer->getProperty('baseUri')->getValue($server);
-        foreach ($reflectionServer->getAttributes() as $reflectionAttribute) {
+        $baseUri = (new ReflectionClass($server))->getProperty('baseUri')->getValue($server);
+        foreach (Attribute::allForClass($server) as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
             if ($attribute instanceof OpenApiPathAttribute === false || count($attribute->enum) === 0) {
                 continue;

@@ -5,14 +5,14 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\ExternalDocs;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ExternalDocs;
 use LaravelJsonApi\Core\Server\Server;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\ExternalDocs\OpenApiExternalDocs;
-use ReflectionClass;
 
 class ExternalDocsBuilder
 {
     public function build(Server $server): ?ExternalDocs
     {
-        foreach ((new ReflectionClass($server))->getAttributes() as $reflectionAttribute) {
+        foreach (Attribute::allForClass($server) as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
             if ($attribute instanceof OpenApiExternalDocs === false || ($attribute->url === null && $attribute->description === null)) {
                 continue;
