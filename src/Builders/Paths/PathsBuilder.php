@@ -31,7 +31,7 @@ class PathsBuilder
                     ->in('path')
                     ->name(trim($routeParamName, '{}'))
                     ->schema((new Schema())->type('integer'))
-                    ->required(true);
+                    ->required();
             }
 
             foreach ($route->methods as $method) {
