@@ -32,6 +32,10 @@ class PathsBuilder
             }
 
             foreach ($route->methods as $method) {
+                if (strtoupper($method) === 'HEAD') {
+                    continue;
+                }
+
                 $operationsForUri[$route->uri()][] = (new Operation())
                     ->action(strtolower($method))
                     ->parameters(...RouteParamsBuilder::build($route))
