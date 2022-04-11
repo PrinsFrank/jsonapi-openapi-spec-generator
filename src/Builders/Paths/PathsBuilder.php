@@ -38,6 +38,7 @@ class PathsBuilder
 
                 $relativeUrl = str_replace($server->url(), '', $urlGenerator->to($route->uri()));
                 $operationsForUri[$relativeUrl][] = Operation::create()
+                    ->tags(str_replace('-', ' ', ucfirst($route->defaults['resource_type'] ?? 'Default')))
                     ->action(strtolower($method))
                     ->parameters(...RouteParamsBuilder::build($route))
                     ->responses(...ResponsesBuilder::build($server, $route));
