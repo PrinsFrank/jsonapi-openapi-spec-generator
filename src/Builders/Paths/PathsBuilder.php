@@ -12,6 +12,7 @@ use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiHideMethod;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiHideController;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiTag;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder;
 
@@ -31,6 +32,7 @@ class PathsBuilder
                 continue;
             }
 
+            $customTag = Attribute::classGet($route->getController(), OpenApiTag::class);
             foreach ($route->methods as $method) {
                 if (strtoupper($method) === 'HEAD') {
                     continue;
@@ -38,7 +40,7 @@ class PathsBuilder
 
                 $relativeUrl = str_replace($server->url(), '', $urlGenerator->to($route->uri()));
                 $operationsForUri[$relativeUrl][] = Operation::create()
-                    ->tags(str_replace('-', ' ', ucfirst($route->defaults['resource_type'] ?? 'Default')))
+                    ->tags($customTag !== null ? $customTag->tagName : str_replace('-', ' ', ucfirst($route->defaults['resource_type'] ?? 'Default')))
                     ->action(strtolower($method))
                     ->parameters(...RouteParamsBuilder::build($route))
                     ->responses(...ResponsesBuilder::build($server, $route));
