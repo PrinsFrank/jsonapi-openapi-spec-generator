@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Routing\Route as IlluminateRoute;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiAuthenticationRoute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiHideMethod;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiHideController;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiTag;
@@ -38,12 +39,17 @@ class PathsBuilder
                     continue;
                 }
 
-                $relativeUrl = str_replace($server->url(), '', $urlGenerator->to($route->uri()));
-                $operationsForUri[$relativeUrl][] = Operation::create()
+                $operation = Operation::create()
                     ->tags($customTag !== null ? $customTag->tagName : str_replace('-', ' ', ucfirst($route->defaults['resource_type'] ?? 'Default')))
                     ->action(strtolower($method))
                     ->parameters(...RouteParamsBuilder::build($route))
                     ->responses(...ResponsesBuilder::build($server, $route));
+
+                if (Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiAuthenticationRoute::class)) {
+                    $operation = $operation->noSecurity();
+                }
+
+                $operationsForUri[str_replace($server->url(), '', $urlGenerator->to($route->uri()))][] = $operation;
             }
         }
 
