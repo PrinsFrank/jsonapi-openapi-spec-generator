@@ -12,7 +12,7 @@ use LaravelJsonApi\Core\Server\Server;
 
 class ResponsesBuilder
 {
-    private const APPLICATION_JSON_API = 'application/vnd.api+json';
+    public const APPLICATION_JSON_API = 'application/vnd.api+json';
 
     /** @return Response[] */
     public static function build(Server $server, Route $route): array

@@ -16,7 +16,11 @@ class SchemaBuilder
     /** @return SchemaContract[] */
     public static function build(Server $server): array
     {
-        $schemaDocs = [];
+        $schemaDocs = [
+            OpenApiSchema::object('jsonapi-version')->title('JSON:API version')->properties(OpenApiSchema::string('version')->title('version')->example('1.0')),
+            OpenApiSchema::array('error')->required('title', 'status')->title('Error')->items(OpenApiSchema::object()->properties(OpenApiSchema::string('detail'), OpenApiSchema::string('status'), OpenApiSchema::string('title'), OpenApiSchema::object('source')->properties(OpenApiSchema::string('pointer'))))
+        ];
+
         foreach ($server->schemas()->types() as $schemaType) {
             /** @var Schema $schemaForType */
             $schemaForType = $server->schemas()->schemaFor($schemaType);
