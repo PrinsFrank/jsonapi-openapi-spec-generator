@@ -31,7 +31,7 @@ class ResponsesBuilder
             return $baseResponses;
         }
 
-        return $baseResponses + [
+        return array_merge($baseResponses, [
             Response::ok()
                 ->statusCode(200)
                 ->description(ucfirst($type))
@@ -48,6 +48,6 @@ class ResponsesBuilder
                                 )
                         )
                 )
-        ];
+        ]);
     }
 }
