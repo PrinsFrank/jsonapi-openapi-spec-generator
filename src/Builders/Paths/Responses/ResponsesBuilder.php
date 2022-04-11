@@ -39,7 +39,7 @@ class ResponsesBuilder
                             ->type(Schema::TYPE_OBJECT)
                             ->required('data', 'jsonapi')
                             ->properties(
-                                Schema::ref('#/components/jsonapi-version', 'jsonapi'),
+                                Schema::ref('#/components/schemas/jsonapi-version', 'jsonapi'),
                                 Schema::array('data')->items(Schema::ref('#/components/schemas/' . $type)),
                             )
                     )
