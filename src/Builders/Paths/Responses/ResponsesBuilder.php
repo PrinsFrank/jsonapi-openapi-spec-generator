@@ -17,18 +17,21 @@ class ResponsesBuilder
     /** @return Response[] */
     public static function build(Server $server, Route $route): array
     {
+        $baseResponses = [
+            Response::ref('#/components/responses/400', '400')->statusCode(400),
+            Response::ref('#/components/responses/401', '401')->statusCode(401),
+            Response::ref('#/components/responses/401', '404')->statusCode(404),
+        ];
+
         $serverName = $server->name();
         $type       = array_values(array_filter($server->schemas()->types(), static function ($type) use ($serverName, $route) {
                 return str_starts_with($route->getAction('as') ?? '', $serverName . '.' . $type);
             }))[0] ?? null;
         if ($type === null) {
-            return [];
+            return $baseResponses;
         }
 
-        return [
-            Response::ref('#/components/responses/400', '400')->statusCode(400),
-            Response::ref('#/components/responses/401', '401')->statusCode(401),
-            Response::ref('#/components/responses/401', '404')->statusCode(404),
+        return $baseResponses + [
             Response::ok()
                 ->statusCode(200)
                 ->description(ucfirst($type))
