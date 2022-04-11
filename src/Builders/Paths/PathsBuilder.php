@@ -36,7 +36,8 @@ class PathsBuilder
                     continue;
                 }
 
-                $operationsForUri[$route->uri()][] = (new Operation())
+                $relativeUrl = str_replace($server->url(), '', $urlGenerator->to($route->uri()));
+                $operationsForUri[$relativeUrl][] = Operation::create()
                     ->action(strtolower($method))
                     ->parameters(...RouteParamsBuilder::build($route))
                     ->responses(...ResponsesBuilder::build($server, $route));
