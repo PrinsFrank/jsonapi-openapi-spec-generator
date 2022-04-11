@@ -25,28 +25,26 @@ class ResponsesBuilder
             return [];
         }
 
-        $responses   = [
+        return [
             Response::ref('#/components/responses/400', '400')->statusCode(400),
             Response::ref('#/components/responses/401', '401')->statusCode(401),
             Response::ref('#/components/responses/401', '404')->statusCode(404),
+            (new Response())
+                ->statusCode(200)
+                ->description(ucfirst($type))
+                ->content(
+                    (new MediaType())
+                        ->mediaType(self::APPLICATION_JSON_API)
+                        ->schema(
+                            (new Schema())
+                                ->type(Schema::TYPE_OBJECT)
+                                ->required('data', 'jsonapi')
+                                ->properties(
+                                    Schema::ref('#/components/schemas/jsonapi-version', 'jsonapi'),
+                                    Schema::array('data')->items(Schema::ref('#/components/schemas/' . $type)),
+                                )
+                        )
+                )
         ];
-        $responses[] = (new Response())
-            ->statusCode(200)
-            ->description(ucfirst($type))
-            ->content(
-                (new MediaType())
-                    ->mediaType(self::APPLICATION_JSON_API)
-                    ->schema(
-                        (new Schema())
-                            ->type(Schema::TYPE_OBJECT)
-                            ->required('data', 'jsonapi')
-                            ->properties(
-                                Schema::ref('#/components/schemas/jsonapi-version', 'jsonapi'),
-                                Schema::array('data')->items(Schema::ref('#/components/schemas/' . $type)),
-                            )
-                    )
-            );
-
-        return $responses;
     }
 }
