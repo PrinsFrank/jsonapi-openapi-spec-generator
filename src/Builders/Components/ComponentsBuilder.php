@@ -7,6 +7,7 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Components;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Response\ResponseBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Schema\SchemaBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Security\SecuritySchemesBuilder;
 
 class ComponentsBuilder
 {
@@ -14,6 +15,7 @@ class ComponentsBuilder
     {
         return (new Components())
             ->schemas(... SchemaBuilder::build($server))
-            ->responses(... ResponseBuilder::build());
+            ->responses(... ResponseBuilder::build())
+            ->securitySchemes(... SecuritySchemesBuilder::build($server));
     }
 }
