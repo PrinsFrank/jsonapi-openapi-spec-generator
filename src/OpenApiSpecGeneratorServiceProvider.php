@@ -12,7 +12,6 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Info\InfoBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\PathsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Security\SecurityBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\ServersBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Tags\TagsBuilder;
 
 class OpenApiSpecGeneratorServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -23,7 +22,6 @@ class OpenApiSpecGeneratorServiceProvider extends ServiceProvider implements Def
             static function (Application $application) {
                 return new OpenApiSpecGenerator(
                     $application,
-                    new TagsBuilder(),
                     new ExternalDocsBuilder(),
                     new InfoBuilder(),
                     new ServersBuilder(),

@@ -20,13 +20,11 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Info\InfoBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\PathsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Security\SecurityBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\ServersBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Tags\TagsBuilder;
 
 class OpenApiSpecGenerator
 {
     public function __construct(
         private Application $application,
-        private TagsBuilder $tagsBuilder,
         private ExternalDocsBuilder $externalDocsBuilder,
         private InfoBuilder $infoBuilder,
         private ServersBuilder $serversBuilder,
@@ -64,7 +62,6 @@ class OpenApiSpecGenerator
         $urlGenerator = $this->application->make(UrlGenerator::class);
         return OpenApi::create()
             ->openapi(OpenApi::OPENAPI_3_0_2)
-            ->tags(...$this->tagsBuilder->build($server))
             ->externalDocs($this->externalDocsBuilder->build($server))
             ->info($this->infoBuilder->build($server))
             ->servers(...$this->serversBuilder->build($server))
