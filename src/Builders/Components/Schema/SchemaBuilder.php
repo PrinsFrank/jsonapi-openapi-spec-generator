@@ -31,7 +31,13 @@ class SchemaBuilder
             }
 
             $schemaDocs[] = OpenApiSchema::object($schemaType)
-                ->properties(... $properties);
+                ->required('type', 'id', 'attributes')
+                ->properties(
+                    OpenApiSchema::string('type')->title('type')->default($schemaType),
+                    OpenApiSchema::string('id')->example('1'),
+                    OpenApiSchema::object('attributes')->properties(... $properties),
+                    OpenApiSchema::object('relationships')
+                );
         }
 
         return $schemaDocs;
