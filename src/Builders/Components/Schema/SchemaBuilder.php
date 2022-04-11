@@ -27,7 +27,7 @@ class SchemaBuilder
             $properties = [];
             foreach ($schemaForType->fields() as $field) {
                 /** @var SchemaField $field */
-                $properties[] = OpenApiSchema::create($field->name())->type(Field::getType($field));
+                $properties[] = OpenApiSchema::create($field->name())->title($field->name())->type(Field::getType($field));
             }
 
             $schemaDocs[] = OpenApiSchema::object($schemaType)
