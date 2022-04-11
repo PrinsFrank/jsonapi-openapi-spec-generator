@@ -30,7 +30,9 @@ class ResponsesBuilder
             Response::ref('#/components/responses/401', '401')->statusCode(401),
             Response::ref('#/components/responses/401', '404')->statusCode(404),
         ];
-        $responses[] = (new Response())->statusCode(200)
+        $responses[] = (new Response())
+            ->statusCode(200)
+            ->description(ucfirst($type))
             ->content(
                 (new MediaType())
                     ->mediaType(self::APPLICATION_JSON_API)
