@@ -7,6 +7,8 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Schema;
 use GoldSpecDigital\ObjectOrientedOAS\Contracts\SchemaContract;
 use LaravelJsonApi\Contracts\Schema\Field as SchemaField;
 use LaravelJsonApi\Core\Server\Server;
+use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\Relation;
 use LaravelJsonApi\Eloquent\Schema;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema as OpenApiSchema;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Schema\Field\Field;
@@ -27,6 +29,10 @@ class SchemaBuilder
             $properties = [];
             foreach ($schemaForType->fields() as $field) {
                 /** @var SchemaField $field */
+                if ($field instanceof Relation || $field instanceof ID) {
+                    continue;
+                }
+
                 $properties[] = OpenApiSchema::create($field->name())->title($field->name())->type(Field::getType($field));
             }
 
