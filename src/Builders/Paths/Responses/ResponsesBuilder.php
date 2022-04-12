@@ -9,6 +9,8 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Response;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Illuminate\Routing\Route;
 use LaravelJsonApi\Core\Server\Server;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiJWTResponse;
 
 class ResponsesBuilder
 {
@@ -22,6 +24,10 @@ class ResponsesBuilder
             Response::ref('#/components/responses/401', '401')->statusCode(401),
             Response::ref('#/components/responses/401', '404')->statusCode(404),
         ];
+
+        if (Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiJWTResponse::class)) {
+            return array_merge($baseResponses, [Response::ref('#/components/responses/jwt-token', '200')->statusCode(200)]);
+        }
 
         $serverName = $server->name();
         $type       = array_values(array_filter($server->schemas()->types(), static function ($type) use ($serverName, $route) {

@@ -67,6 +67,6 @@ class OpenApiSpecGenerator
             ->servers(...$this->serversBuilder->build($server))
             ->security(...$this->securityBuilder->build($server))
             ->paths(...$this->pathsBuilder->build($server, $router, $urlGenerator))
-            ->components($this->componentsBuilder->build($server));
+            ->components($this->componentsBuilder->build($server, $router, $urlGenerator));
     }
 }
