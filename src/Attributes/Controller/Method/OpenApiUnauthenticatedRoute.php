@@ -8,7 +8,7 @@ use Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\OpenApiAttribute;
 
 #[Attribute]
-class OpenApiUnAuthenticatedRoute implements OpenApiAttribute
+class OpenApiUnauthenticatedRoute implements OpenApiAttribute
 {
 
 }

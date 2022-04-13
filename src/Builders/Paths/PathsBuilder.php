@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Routing\Route as IlluminateRoute;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiUnAuthenticatedRoute;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiUnauthenticatedRoute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiHideMethod;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiHideController;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiTag;
@@ -45,7 +45,7 @@ class PathsBuilder
                     ->parameters(...RouteParamsBuilder::build($route))
                     ->responses(...ResponsesBuilder::build($server, $route));
 
-                if (Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiUnAuthenticatedRoute::class)) {
+                if (Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiUnauthenticatedRoute::class)) {
                     $operation = $operation->noSecurity();
                 }
 
