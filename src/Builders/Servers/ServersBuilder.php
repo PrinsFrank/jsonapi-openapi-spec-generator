@@ -31,7 +31,9 @@ class ServersBuilder
         $serverPattern = static::SERVER_PATTERN;
 
         $variables = [];
-        $baseUri = (new ReflectionClass($server))->getProperty('baseUri')->getValue($server);
+        $baseUriProp = (new ReflectionClass($server))->getProperty('baseUri');
+        $baseUriProp->setAccessible(true);
+        $baseUri = $baseUriProp->getValue($server);
         foreach (Attribute::allForClass($server) as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
             if ($attribute instanceof OpenApiPathAttribute === false || count($attribute->enum) === 0) {
