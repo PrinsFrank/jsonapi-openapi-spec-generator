@@ -1,0 +1,178 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "foo\/bar"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "jsonapi-version": {
+                "title": "JSON:API version",
+                "type": "object",
+                "properties": {
+                    "version": {
+                        "title": "version",
+                        "type": "string",
+                        "example": "1.0"
+                    }
+                }
+            },
+            "error": {
+                "title": "Error",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "detail": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "source": {
+                            "type": "object",
+                            "properties": {
+                                "pointer": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "title",
+                    "status"
+                ]
+            },
+            "posts": {
+                "type": "object",
+                "required": [
+                    "type",
+                    "id",
+                    "attributes"
+                ],
+                "properties": {
+                    "type": {
+                        "title": "type",
+                        "default": "posts",
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "title": "content",
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "title": "createdAt",
+                                "type": "string"
+                            },
+                            "slug": {
+                                "title": "slug",
+                                "type": "string"
+                            },
+                            "synopsis": {
+                                "title": "synopsis",
+                                "type": "string"
+                            },
+                            "title": {
+                                "title": "title",
+                                "type": "string"
+                            },
+                            "updatedAt": {
+                                "title": "updatedAt",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application\/vnd.api+json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "$ref": "#\/components\/schemas\/error"
+                                },
+                                "jsonapi-version": {
+                                    "$ref": "#\/components\/schemas\/jsonapi-version"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Forbidden",
+                "content": {
+                    "application\/vnd.api+json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "$ref": "#\/components\/schemas\/error"
+                                },
+                                "jsonapi-version": {
+                                    "$ref": "#\/components\/schemas\/jsonapi-version"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Not Found",
+                "content": {
+                    "application\/vnd.api+json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "$ref": "#\/components\/schemas\/error"
+                                },
+                                "jsonapi-version": {
+                                    "$ref": "#\/components\/schemas\/jsonapi-version"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "422": {
+                "description": "Unprocessable Entity",
+                "content": {
+                    "application\/vnd.api+json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "$ref": "#\/components\/schemas\/error"
+                                },
+                                "jsonapi-version": {
+                                    "$ref": "#\/components\/schemas\/jsonapi-version"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

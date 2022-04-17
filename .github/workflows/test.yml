@@ -21,7 +21,5 @@ jobs:
           coverage: none
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
-      - name: Run Unit tests
-        run: vendor/bin/phpunit --testsuite Unit
       - name: Run Functional tests
         run: vendor/bin/phpunit --testsuite Functional
