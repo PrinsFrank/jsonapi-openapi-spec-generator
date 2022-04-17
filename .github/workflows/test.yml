@@ -22,4 +22,4 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
       - name: Run Functional tests
-        run: vendor/bin/phpunit --testsuite Functional
+        run: vendor/bin/phpunit --testsuite Feature
