@@ -5,6 +5,11 @@
             "url": ""
         }
     ],
+    "paths": {
+        "\/": {
+            "description": "No paths configured yet"
+        }
+    },
     "components": {
         "schemas": {
             "jsonapi-version": {

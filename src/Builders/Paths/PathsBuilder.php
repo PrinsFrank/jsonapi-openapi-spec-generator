@@ -58,6 +58,6 @@ class PathsBuilder
             $pathItems[] = (new PathItem())->route('/' . ltrim($uri, '/'))->operations(... $operations);
         }
 
-        return $pathItems;
+        return $pathItems !== [] ? $pathItems : [(new PathItem())->route('/')->description('No paths configured yet')];
     }
 }

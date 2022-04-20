@@ -5,6 +5,11 @@
             "url": "foo\/bar"
         }
     ],
+    "paths": {
+        "\/": {
+            "description": "No paths configured yet"
+        }
+    },
     "components": {
         "schemas": {
             "jsonapi-version": {
