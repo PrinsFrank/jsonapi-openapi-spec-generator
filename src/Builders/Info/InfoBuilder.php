@@ -20,15 +20,13 @@ class InfoBuilder
 {
     public function build(Server $server): ?Info
     {
-        $info = new Info();
-        $hasAttribute = false;
+        $info = (new Info())->title('API')->version('1.0.0');
         foreach (Attribute::allForClass($server) as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
             if ($attribute instanceof OpenApiInfoAttribute === false) {
                 continue;
             }
 
-            $hasAttribute = true;
             $info = match(get_class($attribute)) {
                 OpenApiContact::class => $info->contact((new Contact())->url($attribute->url)->name($attribute->name)->email($attribute->email)),
                 OpenApiDescription::class => $info->description($attribute->description),
@@ -39,6 +37,6 @@ class InfoBuilder
             };
         }
 
-        return $hasAttribute === false ? null : $info;
+        return $info;
     }
 }
