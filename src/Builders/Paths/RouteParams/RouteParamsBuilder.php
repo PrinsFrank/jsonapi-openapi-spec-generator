@@ -8,7 +8,7 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Illuminate\Routing\Route;
 use LaravelJsonApi\Core\Server\Server;
-use LaravelJsonApi\Eloquent\Filters\Concerns\IsSingular;
+use LaravelJsonApi\Laravel\Routing\Route as JsonApiRoute;
 
 class RouteParamsBuilder
 {
@@ -21,17 +21,18 @@ class RouteParamsBuilder
             $routeParams[] = (new Parameter())
                 ->in('path')
                 ->name(trim($routeParamName, '{}'))
-                ->schema((new Schema())->type('integer'))
+                ->schema(Schema::integer())
                 ->required();
         }
 
-        if (isset($route->defaults['resource_type']) && str_contains($route->getName(), 'index')) {
-            $schema = $server->schemas()->schemaFor($route->defaults['resource_type']);
+	$resourceType = $route->parameter(JsonApiRoute::RESOURCE_TYPE);
+        if ($resourceType !== null && str_contains($route->getName(), 'index')) {
+            $schema = $server->schemas()->schemaFor($resourceType);
             foreach ($schema->filters() as $filter) {
                 $routeParams[] = (new Parameter())
                     ->in('query')
                     ->name('filter[' . $filter->key() . ']')
-                    ->schema($filter->isSingular() ? Schema::string() : (new Schema())->type('array'));
+                    ->schema($filter->isSingular() ? Schema::string() : Schema::array());
             }
         }
 

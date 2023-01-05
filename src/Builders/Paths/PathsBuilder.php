@@ -42,7 +42,7 @@ class PathsBuilder
                 $operation = Operation::create()
                     ->tags($customTag !== null ? $customTag->tagName : str_replace('-', ' ', ucfirst($route->defaults['resource_type'] ?? 'Default')))
                     ->action(strtolower($method))
-                    ->parameters(...RouteParamsBuilder::build($server,$route))
+                    ->parameters(...RouteParamsBuilder::build($server, $route))
                     ->responses(...ResponsesBuilder::build($server, $route));
 
                 if (Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiUnauthenticatedRoute::class)) {
