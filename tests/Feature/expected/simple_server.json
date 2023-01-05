@@ -6,12 +6,248 @@
     },
     "servers": [
         {
-            "url": "foo\/bar"
+            "url": "\/api"
         }
     ],
     "paths": {
-        "\/": {
-            "description": "No paths configured yet"
+        "\/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#\/components\/responses\/400"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "200": {
+                        "description": "Posts",
+                        "content": {
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "jsonapi"
+                                    ],
+                                    "properties": {
+                                        "jsonapi": {
+                                            "$ref": "#\/components\/schemas\/jsonapi-version"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/posts"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#\/components\/responses\/400"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "200": {
+                        "description": "Posts",
+                        "content": {
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "jsonapi"
+                                    ],
+                                    "properties": {
+                                        "jsonapi": {
+                                            "$ref": "#\/components\/schemas\/jsonapi-version"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/posts"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/posts\/{post}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "parameters": [
+                    {
+                        "name": "post",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#\/components\/responses\/400"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "200": {
+                        "description": "Posts",
+                        "content": {
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "jsonapi"
+                                    ],
+                                    "properties": {
+                                        "jsonapi": {
+                                            "$ref": "#\/components\/schemas\/jsonapi-version"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/posts"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Posts"
+                ],
+                "parameters": [
+                    {
+                        "name": "post",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#\/components\/responses\/400"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "200": {
+                        "description": "Posts",
+                        "content": {
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "jsonapi"
+                                    ],
+                                    "properties": {
+                                        "jsonapi": {
+                                            "$ref": "#\/components\/schemas\/jsonapi-version"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/posts"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "parameters": [
+                    {
+                        "name": "post",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#\/components\/responses\/400"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/401"
+                    },
+                    "200": {
+                        "description": "Posts",
+                        "content": {
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "jsonapi"
+                                    ],
+                                    "properties": {
+                                        "jsonapi": {
+                                            "$ref": "#\/components\/schemas\/jsonapi-version"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/posts"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

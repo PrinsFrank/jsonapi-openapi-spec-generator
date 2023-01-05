@@ -8,7 +8,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Schemas\PostSchem
 
 class SimpleServer extends Server
 {
-    protected string $baseUri = 'foo/bar';
+    protected string $baseUri = '/api';
 
     protected function allSchemas(): array
     {
