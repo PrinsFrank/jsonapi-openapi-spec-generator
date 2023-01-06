@@ -22,4 +22,4 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
       - name: Check Code Style
-        run: php-cs-fixer fix --allow-risky=yes --dry-run
+        run: composer cs

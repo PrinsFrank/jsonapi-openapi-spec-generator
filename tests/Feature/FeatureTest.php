@@ -14,6 +14,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\OpenApiSpecGenerator;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Controllers\PostController;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Servers\EmptyServer;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Servers\SimpleServer;
+use RuntimeException;
 
 /**
  * @coversNothing
@@ -39,7 +40,7 @@ class FeatureTest extends TestCase
     public function testScenarios(string $serverName, array $controllers): void
     {
         /** @var OpenApiSpecGenerator $specGenerator */
-        $specGenerator = $this->app->make(OpenApiSpecGenerator::class);
+        $specGenerator = $this->app?->make(OpenApiSpecGenerator::class) ?? throw new RuntimeException('Running this test without a booted application is not possible');
 
         /** @var Registrar $registrar */
         $registrar = $this->app->make(Registrar::class);
