@@ -18,7 +18,7 @@ class UrlBuilder
         foreach ($variables as $variable) {
             if (count($variable->enum) > 1) {
                 $variablesWithOptions[] = $variable;
-                $serverPattern = preg_replace('/{(?<prefix>[^}]*)' . $variable->objectId . '(?<suffix>[^}]*)}/', '${1}{' . $variable->objectId . '}${2}', $serverPattern);
+                $serverPattern          = preg_replace('/{(?<prefix>[^}]*)' . $variable->objectId . '(?<suffix>[^}]*)}/', '${1}{' . $variable->objectId . '}${2}', $serverPattern);
                 continue;
             }
 
@@ -29,7 +29,9 @@ class UrlBuilder
 
         preg_match_all('/{[^}]*?([A-z]+)[^}]*?}/', $serverPattern, $remainingVariableDefinitions);
         foreach ($remainingVariableDefinitions[1] ?? [] as $remainingVariableDefinition) {
-            $existingVariables = array_map(static function ($variable) {return $variable->objectId;}, $variables);
+            $existingVariables = array_map(static function ($variable) {
+                return $variable->objectId;
+            }, $variables);
             if (in_array($remainingVariableDefinition, $existingVariables, true)) {
                 continue;
             }

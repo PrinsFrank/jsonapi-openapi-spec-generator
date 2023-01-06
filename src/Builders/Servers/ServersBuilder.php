@@ -30,7 +30,7 @@ class ServersBuilder
         $documentation = new ServerDocumentation();
         $serverPattern = static::SERVER_PATTERN;
 
-        $variables = [];
+        $variables   = [];
         $baseUriProp = (new ReflectionClass($server))->getProperty('baseUri');
         $baseUriProp->setAccessible(true);
         $baseUri = $baseUriProp->getValue($server);

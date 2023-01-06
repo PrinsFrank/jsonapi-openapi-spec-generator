@@ -31,8 +31,8 @@ class ResponsesBuilder
 
         $serverName = $server->name();
         $type       = array_values(array_filter($server->schemas()->types(), static function ($type) use ($serverName, $route) {
-                return str_starts_with($route->getAction('as') ?? '', $serverName . '.' . $type);
-            }))[0] ?? null;
+            return str_starts_with($route->getAction('as') ?? '', $serverName . '.' . $type);
+        }))[0] ?? null;
         if ($type === null) {
             return $baseResponses;
         }

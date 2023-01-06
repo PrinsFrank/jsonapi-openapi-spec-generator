@@ -28,7 +28,7 @@ class RouteParamsBuilder
 
         $resourceType = $route->defaults['resource_type'] ?? null;
         if ($resourceType !== null && str_contains($route->getName(), 'index')) {
-            $schema = $server->schemas()->schemaFor($resourceType);
+            $schema          = $server->schemas()->schemaFor($resourceType);
             $stringOrInteger = (new AnyOf())->schemas(Schema::string(), Schema::integer());
 
             foreach ($schema->filters() as $filter) {

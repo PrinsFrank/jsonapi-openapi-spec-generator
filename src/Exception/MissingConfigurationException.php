@@ -5,5 +5,4 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Exception;
 
 class MissingConfigurationException extends JsonapiOpenapiSpecGeneratorException
 {
-
 }

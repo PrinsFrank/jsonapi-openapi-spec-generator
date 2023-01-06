@@ -35,9 +35,9 @@ class PostSchema extends Schema
 
     public function filters(): iterable
     {
-	    return [
-		    Where::make('id')->singular(),
-		    Where::make('author_id'),
-	    ];
+        return [
+            Where::make('id')->singular(),
+            Where::make('author_id'),
+        ];
     }
 }

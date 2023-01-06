@@ -5,5 +5,4 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info;
 
 interface OpenApiInfoAttribute
 {
-
 }

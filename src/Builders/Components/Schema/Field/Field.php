@@ -18,11 +18,11 @@ class Field
      */
     public static function getType(SchemaField $field): string
     {
-        return match(get_class($field)) {
+        return match (get_class($field)) {
             Str::class, DateTime::class => 'string',
             Boolean::class => 'boolean',
-            Number::class => 'number',
-            default => throw new NotImplementedException('Retrieving type for ' . get_class($field) . ' failed')
+            Number::class  => 'number',
+            default        => throw new NotImplementedException('Retrieving type for ' . get_class($field) . ' failed')
         };
     }
 }

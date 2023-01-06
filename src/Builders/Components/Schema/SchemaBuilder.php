@@ -26,7 +26,7 @@ class SchemaBuilder
         foreach ($server->schemas()->types() as $schemaType) {
             /** @var Schema $schemaForType */
             $schemaForType = $server->schemas()->schemaFor($schemaType);
-            $properties = [];
+            $properties    = [];
             foreach ($schemaForType->fields() as $field) {
                 /** @var SchemaField $field */
                 if ($field instanceof Relation || $field instanceof ID) {

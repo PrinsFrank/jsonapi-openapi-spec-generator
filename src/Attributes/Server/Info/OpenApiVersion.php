@@ -8,5 +8,7 @@ use Attribute;
 #[Attribute]
 class OpenApiVersion implements OpenApiInfoAttribute
 {
-    public function __construct(public ?string $version) { }
+    public function __construct(public ?string $version)
+    {
+    }
 }

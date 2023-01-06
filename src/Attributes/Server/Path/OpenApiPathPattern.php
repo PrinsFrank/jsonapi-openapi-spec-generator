@@ -10,7 +10,9 @@ class OpenApiPathPattern implements OpenApiPathAttribute
 {
     public const OBJECT_ID = 'pattern';
 
-    public function __construct(public string $pattern) { }
+    public function __construct(public string $pattern)
+    {
+    }
 
     public function description(): string
     {

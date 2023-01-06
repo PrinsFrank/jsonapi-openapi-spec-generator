@@ -10,5 +10,4 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\OpenApiAttribute;
 #[Attribute]
 class OpenApiUnauthenticatedRoute implements OpenApiAttribute
 {
-
 }

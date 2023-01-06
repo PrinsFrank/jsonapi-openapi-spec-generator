@@ -1,3 +1,6 @@
+# IDE
+.idea
+
 # Composer
 composer.lock
 /vendor/
@@ -5,3 +8,6 @@ composer.lock
 # PHPUnit
 .phpunit.xml
 .phpunit.result.cache
+
+# PHPCSFixer
+.php-cs-fixer.cache

@@ -8,5 +8,7 @@ use Attribute;
 #[Attribute]
 class OpenApiTermsOfService implements OpenApiInfoAttribute
 {
-    public function __construct(public ?string $termsOfService) { }
+    public function __construct(public ?string $termsOfService)
+    {
+    }
 }

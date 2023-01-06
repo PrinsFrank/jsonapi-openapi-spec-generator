@@ -6,5 +6,4 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Exception;
 
 class InvalidAttributeArgument extends JsonapiOpenapiSpecGeneratorException
 {
-
 }

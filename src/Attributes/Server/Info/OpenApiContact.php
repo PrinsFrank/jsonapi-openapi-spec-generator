@@ -8,5 +8,7 @@ use Attribute;
 #[Attribute]
 class OpenApiContact implements OpenApiInfoAttribute
 {
-    public function __construct(public ?string $name = null, public ?string $url = null, public ?string $email = null) { }
+    public function __construct(public ?string $name = null, public ?string $url = null, public ?string $email = null)
+    {
+    }
 }

@@ -27,13 +27,13 @@ class InfoBuilder
                 continue;
             }
 
-            $info = match(get_class($attribute)) {
-                OpenApiContact::class => $info->contact((new Contact())->url($attribute->url)->name($attribute->name)->email($attribute->email)),
-                OpenApiDescription::class => $info->description($attribute->description),
-                OpenApiLicense::class => $info->license((new License())->name($attribute->name)->url($attribute->url)),
+            $info = match (get_class($attribute)) {
+                OpenApiContact::class        => $info->contact((new Contact())->url($attribute->url)->name($attribute->name)->email($attribute->email)),
+                OpenApiDescription::class    => $info->description($attribute->description),
+                OpenApiLicense::class        => $info->license((new License())->name($attribute->name)->url($attribute->url)),
                 OpenApiTermsOfService::class => $info->termsOfService($attribute->termsOfService),
-                OpenApiTitle::class => $info->title($attribute->title),
-                OpenApiVersion::class => $info->version($attribute->version),
+                OpenApiTitle::class          => $info->title($attribute->title),
+                OpenApiVersion::class        => $info->version($attribute->version),
             };
         }
 

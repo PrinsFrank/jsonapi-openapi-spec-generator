@@ -19,10 +19,11 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Servers\SimpleSer
 class FeatureTest extends TestCase
 {
     private const SERVER_NAME_EMPTY = 'empty_server';
+
     private const SERVER_NAME_SIMPLE = 'simple_server';
 
     private const SERVERS = [
-        self::SERVER_NAME_EMPTY => EmptyServer::class,
+        self::SERVER_NAME_EMPTY  => EmptyServer::class,
         self::SERVER_NAME_SIMPLE => SimpleServer::class,
     ];
 

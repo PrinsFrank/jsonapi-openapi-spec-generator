@@ -14,7 +14,7 @@ class SecuritySchemesBuilder
     /** @return SecurityScheme[] */
     public static function build(Server $server): array
     {
-        $securitySchemes = [];
+        $securitySchemes   = [];
         $securityAttribute = Attribute::classGet($server, OpenApiSecurityAttribute::class);
         if ($securityAttribute !== null) {
             $securitySchemes[] = SecurityScheme::create($securityAttribute->schemeName())->type($securityAttribute->getType())->scheme($securityAttribute->scheme());

@@ -9,5 +9,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\OpenApiAttribute;
 #[Attribute]
 class OpenApiExternalDocs implements OpenApiAttribute
 {
-    public function __construct(public ?string $url = null, public ?string $description = null) { }
+    public function __construct(public ?string $url = null, public ?string $description = null)
+    {
+    }
 }

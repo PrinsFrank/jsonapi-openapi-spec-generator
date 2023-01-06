@@ -5,5 +5,4 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Exception;
 
 class VersionNotFoundException extends JsonapiOpenapiSpecGeneratorException
 {
-
 }

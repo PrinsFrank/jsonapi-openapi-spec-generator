@@ -31,7 +31,8 @@ class OpenApiSpecGenerator
         private SecurityBuilder $securityBuilder,
         private PathsBuilder $pathsBuilder,
         private ComponentsBuilder $componentsBuilder
-    ) { }
+    ) {
+    }
 
     /**
      * @throws JsonapiOpenapiSpecGeneratorException
@@ -53,12 +54,12 @@ class OpenApiSpecGenerator
         }
 
         $appResolver = $this->application->get(AppResolver::class);
-        $server = new $apiVersionFQN($appResolver, $serverName);
+        $server      = new $apiVersionFQN($appResolver, $serverName);
         if ($server instanceof Server === false) {
             throw new InvalidServerException('Server is not an instance of "' . Server::class . '"');
         }
 
-        $router = $this->application->get(Route::class);
+        $router       = $this->application->get(Route::class);
         $urlGenerator = $this->application->make(UrlGenerator::class);
         return OpenApi::create()
             ->openapi(OpenApi::OPENAPI_3_0_2)
