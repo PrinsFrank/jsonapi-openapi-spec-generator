@@ -22,18 +22,20 @@ class PathsBuilder implements PathsBuilderContract
     public function __construct(
         private ResponsesBuilderContract $responsesBuilder,
         private RouteParamsBuilderContract $routeParamsBuilder,
+        private Router $router,
+        private UrlGenerator $urlGenerator
     ) {
     }
 
     /** @return PathItem[] */
-    public function build(Server $server, Router $router, UrlGenerator $urlGenerator): array
+    public function build(Server $server): array
     {
         $operationsForUri = [];
 
         /** @var array<Route> $routes */
-        $routes = $router->getRoutes();
+        $routes = $this->router->getRoutes();
         foreach ($routes as $route) {
-            if (str_starts_with($urlGenerator->to($route->uri()), $server->url()) === false) {
+            if (str_starts_with($this->urlGenerator->to($route->uri()), $server->url()) === false) {
                 continue;
             }
 
@@ -57,7 +59,7 @@ class PathsBuilder implements PathsBuilderContract
                     $operation = $operation->noSecurity();
                 }
 
-                $operationsForUri[str_replace($server->url(), '', $urlGenerator->to($route->uri()))][] = $operation;
+                $operationsForUri[str_replace($server->url(), '', $this->urlGenerator->to($route->uri()))][] = $operation;
             }
         }
 

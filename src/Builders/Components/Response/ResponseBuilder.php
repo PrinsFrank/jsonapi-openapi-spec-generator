@@ -17,8 +17,14 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBui
 
 class ResponseBuilder implements ResponseBuilderContract
 {
+    public function __construct(
+        private Router $router,
+        private UrlGenerator $urlGenerator
+    ) {
+    }
+
     /** @return Response[] */
-    public function build(Server $server, Router $router, UrlGenerator $urlGenerator): array
+    public function build(Server $server): array
     {
         $content = MediaType::create()
             ->mediaType(ResponsesBuilder::APPLICATION_JSON_API)
@@ -32,9 +38,9 @@ class ResponseBuilder implements ResponseBuilderContract
         ];
 
         /** @var array<Route> $routes */
-        $routes = $router->getRoutes();
+        $routes = $this->router->getRoutes();
         foreach ($routes as $route) {
-            if (str_starts_with($urlGenerator->to($route->uri()), $server->url()) && Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiJWTResponse::class)) {
+            if (str_starts_with($this->urlGenerator->to($route->uri()), $server->url()) && Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiJWTResponse::class)) {
                 $responses[] = Response::ok('jwt-token')
                     ->statusCode(200)
                     ->content(MediaType::create()

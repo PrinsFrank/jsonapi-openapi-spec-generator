@@ -5,9 +5,6 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator;
 
 use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Foundation\Application;
-use Illuminate\Routing\Router;
 use LaravelJsonApi\Core\Server\Server;
 use LaravelJsonApi\Core\Support\AppResolver;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\ComponentsBuilderContract;
@@ -26,7 +23,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\VersionNotFoundException;
 class OpenApiSpecGenerator
 {
     public function __construct(
-        private Application                 $application,
+        private AppResolver                 $appResolver,
         private Repository                  $configRepository,
         private ExternalDocsBuilderContract $externalDocsBuilder,
         private InfoBuilderContract         $infoBuilder,
@@ -60,21 +57,18 @@ class OpenApiSpecGenerator
             throw new ClassNotFoundException('Api server class "' . $apiVersionFQN . '" for "' . $serverName . '" doesn\'t exist');
         }
 
-        $appResolver = $this->application->make(AppResolver::class);
-        $server      = new $apiVersionFQN($appResolver, $serverName);
+        $server = new $apiVersionFQN($this->appResolver, $serverName);
         if ($server instanceof Server === false) {
             throw new InvalidServerException('Server is not an instance of "' . Server::class . '"');
         }
 
-        $router       = $this->application->make(Router::class);
-        $urlGenerator = $this->application->make(UrlGenerator::class);
         return OpenApi::create()
             ->openapi(OpenApi::OPENAPI_3_0_2)
             ->externalDocs($this->externalDocsBuilder->build($server))
             ->info($this->infoBuilder->build($server))
             ->servers(...$this->serversBuilder->build($server))
             ->security(...$this->securityBuilder->build($server))
-            ->paths(...$this->pathsBuilder->build($server, $router, $urlGenerator))
-            ->components($this->componentsBuilder->build($server, $router, $urlGenerator));
+            ->paths(...$this->pathsBuilder->build($server))
+            ->components($this->componentsBuilder->build($server));
     }
 }
