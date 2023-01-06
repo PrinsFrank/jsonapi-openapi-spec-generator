@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder;
 use LaravelJsonApi\Core\Server\Server;
 use Illuminate\Routing\Route;
-use LaravelJsonApi\Laravel\Routing\Route as JsonApiRoute;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use LaravelJsonApi\Contracts\Schema\Container as SchemaContainerContract;
@@ -23,12 +22,13 @@ class RouteParamsBuilderTest extends TestCase
      */
     public function testBuildNone(): void
     {
-        $server = $this->createMock(Server::class);
         $route = $this->createMock(Route::class);
         $route->expects(self::once())->method('uri')->willReturn('/foo');
 
-        $parameters = RouteParamsBuilder::build($server, $route);
-        self::assertEquals([], $parameters);
+        self::assertSame(
+            [],
+            RouteParamsBuilder::build($this->createMock(Server::class), $route)
+        );
     }
 
     /**
@@ -36,20 +36,18 @@ class RouteParamsBuilderTest extends TestCase
      */
     public function testBuildUrlParameter(): void
     {
-        $server = $this->createMock(Server::class);
         $route = $this->createMock(Route::class);
         $route->expects(self::once())->method('uri')->willReturn('/foo/{bar}');
 
-        $parameters = RouteParamsBuilder::build($server, $route);
         self::assertEquals(
             [
-                $routeParams[] = (new Parameter())
+                (new Parameter())
                     ->in('path')
                     ->name('bar')
                     ->schema(Schema::integer())
                     ->required()
-            ], 
-            $parameters
+            ],
+            RouteParamsBuilder::build($this->createMock(Server::class), $route)
         );
     }
 
@@ -70,20 +68,20 @@ class RouteParamsBuilderTest extends TestCase
 
         $server = $this->createMock(Server::class);
         $server->expects(self::once())->method('schemas')->willReturn($schemaContainer);
+
         $route = $this->createMock(Route::class);
         $route->expects(self::once())->method('uri')->willReturn('/foo');
         $route->expects(self::once())->method('getName')->willReturn('index');
         $route->defaults['resource_type'] = 'posts';
 
-        $parameters = RouteParamsBuilder::build($server, $route);
         self::assertEquals(
             [
-                $routeParams[] = (new Parameter())
+                (new Parameter())
                     ->in('query')
                     ->name('filter[foo]')
                     ->schema(Schema::string())
             ],
-            $parameters
+            RouteParamsBuilder::build($server, $route)
         );
     }
 }
