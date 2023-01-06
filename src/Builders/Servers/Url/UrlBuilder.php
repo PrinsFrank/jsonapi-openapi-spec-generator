@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\Url;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Server as ServerDocumentation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\ServerVariable;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathBaseUri;
 
-class UrlBuilder
+class UrlBuilder implements UrlBuilderContract
 {
     /**
      * @param ServerVariable[] $variables
      */
-    public static function build(ServerDocumentation $serverDocumentation, array $variables, string $serverPattern, string $baseUri): ServerDocumentation
+    public function build(ServerDocumentation $serverDocumentation, array $variables, string $serverPattern, string $baseUri): ServerDocumentation
     {
         $variablesWithOptions = [];
         foreach ($variables as $variable) {

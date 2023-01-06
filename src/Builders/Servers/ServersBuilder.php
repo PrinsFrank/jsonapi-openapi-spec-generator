@@ -14,12 +14,18 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathEnv
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathPattern;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathPortNumber;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Path\OpenApiPathProtocol;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\Url\UrlBuilderContract;
 use ReflectionClass;
 use ReflectionException;
 
-class ServersBuilder
+class ServersBuilder implements ServersBuilderContract
 {
     public const SERVER_PATTERN = '{' . OpenApiPathProtocol::OBJECT_ID . '://}{' . OpenApiPathEnvironment::OBJECT_ID . '.}{' . OpenApiPathDomain::OBJECT_ID . '}{:' . OpenApiPathPortNumber::OBJECT_ID . '}{' . OpenApiPathBaseUri::OBJECT_ID . '}';
+
+    public function __construct(
+        private UrlBuilderContract $urlBuilder
+    ) {
+    }
 
     /**
      * @return ServerDocumentation[]
@@ -54,6 +60,6 @@ class ServersBuilder
                 ->description($attribute->description());
         }
 
-        return [UrlBuilder::build($documentation, $variables, $serverPattern, $baseUri)];
+        return [$this->urlBuilder->build($documentation, $variables, $serverPattern, $baseUri)];
     }
 }

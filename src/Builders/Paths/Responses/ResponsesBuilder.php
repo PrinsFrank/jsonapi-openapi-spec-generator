@@ -12,12 +12,12 @@ use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiJWTResponse;
 
-class ResponsesBuilder
+class ResponsesBuilder implements ResponsesBuilderContract
 {
     public const APPLICATION_JSON_API = 'application/vnd.api+json';
 
     /** @return Response[] */
-    public static function build(Server $server, Route $route): array
+    public function build(Server $server, Route $route): array
     {
         $baseResponses = [
             Response::ref('#/components/responses/400', '400')->statusCode(400),

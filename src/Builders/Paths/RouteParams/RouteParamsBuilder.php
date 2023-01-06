@@ -10,10 +10,10 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\AnyOf;
 use Illuminate\Routing\Route;
 use LaravelJsonApi\Core\Server\Server;
 
-class RouteParamsBuilder
+class RouteParamsBuilder implements RouteParamsBuilderContract
 {
     /** @return Parameter[] */
-    public static function build(Server $server, Route $route): array
+    public function build(Server $server, Route $route): array
     {
         preg_match_all('/{[A-z0-9]+}/', $route->uri(), $routeParamNames, PREG_PATTERN_ORDER);
         $routeParams = [];

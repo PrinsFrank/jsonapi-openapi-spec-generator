@@ -11,6 +11,7 @@ use LaravelJsonApi\Laravel\ServiceProvider;
 use Orchestra\Testbench\TestCase;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\JsonapiOpenapiSpecGeneratorException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\OpenApiSpecGenerator;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\OpenApiSpecGeneratorServiceProvider;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Controllers\PostController;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Servers\EmptyServer;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Servers\SimpleServer;
@@ -39,8 +40,12 @@ class FeatureTest extends TestCase
      */
     public function testScenarios(string $serverName, array $controllers): void
     {
+        if ($this->app === null) {
+            throw new RuntimeException('Running this test without a booted application is not possible');
+        }
+
         /** @var OpenApiSpecGenerator $specGenerator */
-        $specGenerator = $this->app?->make(OpenApiSpecGenerator::class) ?? throw new RuntimeException('Running this test without a booted application is not possible');
+        $specGenerator = $this->app->make(OpenApiSpecGenerator::class);
 
         /** @var Registrar $registrar */
         $registrar = $this->app->make(Registrar::class);
@@ -85,6 +90,7 @@ class FeatureTest extends TestCase
     {
         return [
             ServiceProvider::class,
+            OpenApiSpecGeneratorServiceProvider::class,
         ];
     }
 }

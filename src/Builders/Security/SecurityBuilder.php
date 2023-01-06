@@ -9,7 +9,7 @@ use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Security\OpenApiSecurityAttribute;
 
-class SecurityBuilder
+class SecurityBuilder implements SecurityBuilderContract
 {
     /** @return SecurityRequirement[] */
     public function build(Server $server): array

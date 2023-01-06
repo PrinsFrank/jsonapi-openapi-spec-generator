@@ -14,11 +14,17 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiU
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiHideMethod;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiHideController;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\OpenApiTag;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBuilderContract;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilderContract;
 
-class PathsBuilder
+class PathsBuilder implements PathsBuilderContract
 {
+    public function __construct(
+        private ResponsesBuilderContract $responsesBuilder,
+        private RouteParamsBuilderContract $routeParamsBuilder,
+    ) {
+    }
+
     /** @return PathItem[] */
     public function build(Server $server, Router $router, UrlGenerator $urlGenerator): array
     {
@@ -44,8 +50,8 @@ class PathsBuilder
                 $operation = Operation::create()
                     ->tags($customTag !== null ? $customTag->tagName : str_replace('-', ' ', ucfirst($route->defaults['resource_type'] ?? 'Default')))
                     ->action(strtolower($method))
-                    ->parameters(...RouteParamsBuilder::build($server, $route))
-                    ->responses(...ResponsesBuilder::build($server, $route));
+                    ->parameters(...$this->routeParamsBuilder->build($server, $route))
+                    ->responses(...$this->responsesBuilder->build($server, $route));
 
                 if (Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiUnauthenticatedRoute::class)) {
                     $operation = $operation->noSecurity();

@@ -29,7 +29,7 @@ class RouteParamsBuilderTest extends TestCase
 
         self::assertSame(
             [],
-            RouteParamsBuilder::build($this->createMock(Server::class), $route)
+            (new RouteParamsBuilder())->build($this->createMock(Server::class), $route)
         );
     }
 
@@ -49,7 +49,7 @@ class RouteParamsBuilderTest extends TestCase
                     ->schema(Schema::integer())
                     ->required()
             ],
-            RouteParamsBuilder::build($this->createMock(Server::class), $route)
+            (new RouteParamsBuilder())->build($this->createMock(Server::class), $route)
         );
     }
 
@@ -83,7 +83,7 @@ class RouteParamsBuilderTest extends TestCase
                     ->name('filter[foo]')
                     ->schema((new AnyOf())->schemas(Schema::string(), Schema::integer(), Schema::boolean()))
             ],
-            RouteParamsBuilder::build($server, $route)
+            (new RouteParamsBuilder())->build($server, $route)
         );
     }
 }

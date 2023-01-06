@@ -15,10 +15,10 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiJWTResponse;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBuilder;
 
-class ResponseBuilder
+class ResponseBuilder implements ResponseBuilderContract
 {
     /** @return Response[] */
-    public static function build(Server $server, Router $router, UrlGenerator $urlGenerator): array
+    public function build(Server $server, Router $router, UrlGenerator $urlGenerator): array
     {
         $content = MediaType::create()
             ->mediaType(ResponsesBuilder::APPLICATION_JSON_API)

@@ -16,7 +16,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiTermsOf
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiTitle;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Info\OpenApiVersion;
 
-class InfoBuilder
+class InfoBuilder implements InfoBuilderContract
 {
     public function build(Server $server): ?Info
     {

@@ -8,7 +8,7 @@ use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\ExternalDocs\OpenApiExternalDocs;
 
-class ExternalDocsBuilder
+class ExternalDocsBuilder implements ExternalDocsBuilderContract
 {
     public function build(Server $server): ?ExternalDocs
     {

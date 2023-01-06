@@ -13,10 +13,10 @@ use LaravelJsonApi\Eloquent\Schema;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema as OpenApiSchema;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Schema\Field\Field;
 
-class SchemaBuilder
+class SchemaBuilder implements SchemaBuilderContract
 {
     /** @return SchemaContract[] */
-    public static function build(Server $server): array
+    public function build(Server $server): array
     {
         $schemaDocs = [
             OpenApiSchema::object('jsonapi-version')->title('JSON:API version')->properties(OpenApiSchema::string('version')->title('version')->example('1.0')),

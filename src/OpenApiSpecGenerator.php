@@ -4,34 +4,36 @@ declare(strict_types=1);
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator;
 
 use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use LaravelJsonApi\Core\Server\Server;
 use LaravelJsonApi\Core\Support\AppResolver;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\ComponentsBuilder;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\ComponentsBuilderContract;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\ExternalDocs\ExternalDocsBuilderContract;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Info\InfoBuilderContract;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\PathsBuilderContract;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Security\SecurityBuilderContract;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\ServersBuilderContract;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\ClassNotFoundException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\InvalidConfigurationException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\InvalidServerException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\JsonapiOpenapiSpecGeneratorException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\MissingConfigurationException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\VersionNotFoundException;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\ExternalDocs\ExternalDocsBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Info\InfoBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\PathsBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Security\SecurityBuilder;
-use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Servers\ServersBuilder;
 
 class OpenApiSpecGenerator
 {
     public function __construct(
-        private Application $application,
-        private ExternalDocsBuilder $externalDocsBuilder,
-        private InfoBuilder $infoBuilder,
-        private ServersBuilder $serversBuilder,
-        private SecurityBuilder $securityBuilder,
-        private PathsBuilder $pathsBuilder,
-        private ComponentsBuilder $componentsBuilder
+        private Application                 $application,
+        private Repository                  $configRepository,
+        private ExternalDocsBuilderContract $externalDocsBuilder,
+        private InfoBuilderContract         $infoBuilder,
+        private ServersBuilderContract      $serversBuilder,
+        private SecurityBuilderContract     $securityBuilder,
+        private PathsBuilderContract        $pathsBuilder,
+        private ComponentsBuilderContract   $componentsBuilder
     ) {
     }
 
@@ -40,12 +42,12 @@ class OpenApiSpecGenerator
      */
     public function generate(string $serverName): OpenApi
     {
-        $apiVersions = config('jsonapi.servers');
+        $apiVersions = $this->configRepository->get('jsonapi.servers');
         if (is_array($apiVersions) === false) {
             throw new MissingConfigurationException('No api versions configured for jsonapi.servers configuration key');
         }
 
-        $apiVersionFQN = config('jsonapi.servers.' . $serverName);
+        $apiVersionFQN = $this->configRepository->get('jsonapi.servers.' . $serverName);
         if ($apiVersionFQN === null) {
             throw new VersionNotFoundException('No api server configured with name "' . $serverName . '"');
         }

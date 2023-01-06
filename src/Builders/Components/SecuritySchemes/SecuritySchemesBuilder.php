@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Security;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\SecuritySchemes;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\SecurityScheme;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Server\Security\OpenApiSecurityAttribute;
 
-class SecuritySchemesBuilder
+class SecuritySchemesBuilder implements SecuritySchemesBuilderContract
 {
     /** @return SecurityScheme[] */
-    public static function build(Server $server): array
+    public function build(Server $server): array
     {
         $securitySchemes   = [];
         $securityAttribute = Attribute::classGet($server, OpenApiSecurityAttribute::class);
