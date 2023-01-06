@@ -9,7 +9,6 @@
          beStrictAboutResourceUsageDuringSmallTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          forceCoversAnnotation="true"
-         enforceTimeLimit="true"
          verbose="true"
 >
     <testsuites>

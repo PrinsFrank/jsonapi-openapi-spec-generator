@@ -15,6 +15,32 @@
                 "tags": [
                     "Posts"
                 ],
+                "parameters": [
+                    {
+                        "name": "filter[id]",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter[author_id]",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "400": {
                         "$ref": "#\/components\/responses\/400"
