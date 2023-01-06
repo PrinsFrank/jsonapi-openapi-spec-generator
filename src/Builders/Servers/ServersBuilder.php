@@ -33,10 +33,11 @@ class ServersBuilder
         $variables   = [];
         $baseUriProp = (new ReflectionClass($server))->getProperty('baseUri');
         $baseUriProp->setAccessible(true);
+        /** @var string $baseUri */
         $baseUri = $baseUriProp->getValue($server);
         foreach (Attribute::allForClass($server) as $reflectionAttribute) {
             $attribute = $reflectionAttribute->newInstance();
-            if ($attribute instanceof OpenApiPathAttribute === false || count($attribute->enum) === 0) {
+            if ($attribute instanceof OpenApiPathAttribute === false || property_exists($attribute, 'enum') === false || count($attribute->enum) === 0) {
                 continue;
             }
 

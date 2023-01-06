@@ -7,8 +7,9 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\Response;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\MediaType;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Response;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
-use Illuminate\Routing\UrlGenerator;
-use Illuminate\Support\Facades\Route as RouteFacade;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Routing\Route;
+use Illuminate\Routing\Router;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiJWTResponse;
@@ -17,7 +18,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\Responses\ResponsesBui
 class ResponseBuilder
 {
     /** @return Response[] */
-    public static function build(Server $server, RouteFacade $router, UrlGenerator $urlGenerator): array
+    public static function build(Server $server, Router $router, UrlGenerator $urlGenerator): array
     {
         $content = MediaType::create()
             ->mediaType(ResponsesBuilder::APPLICATION_JSON_API)
@@ -30,7 +31,9 @@ class ResponseBuilder
             Response::unprocessableEntity('422')->statusCode(422)->content($content),
         ];
 
-        foreach ($router::getRoutes() as $route) {
+        /** @var array<Route> $routes */
+        $routes = $router->getRoutes();
+        foreach ($routes as $route) {
             if (str_starts_with($urlGenerator->to($route->uri()), $server->url()) && Attribute::methodHas($route->getController(), $route->getActionMethod(), OpenApiJWTResponse::class)) {
                 $responses[] = Response::ok('jwt-token')
                     ->statusCode(200)

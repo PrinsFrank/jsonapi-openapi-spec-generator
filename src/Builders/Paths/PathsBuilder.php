@@ -6,8 +6,8 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Operation;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\PathItem;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Support\Facades\Route as RouteFacade;
-use Illuminate\Routing\Route as IlluminateRoute;
+use Illuminate\Routing\Route;
+use Illuminate\Routing\Router;
 use LaravelJsonApi\Core\Server\Server;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Attribute;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Attributes\Controller\Method\OpenApiUnauthenticatedRoute;
@@ -20,11 +20,13 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParam
 class PathsBuilder
 {
     /** @return PathItem[] */
-    public function build(Server $server, RouteFacade $router, UrlGenerator $urlGenerator): array
+    public function build(Server $server, Router $router, UrlGenerator $urlGenerator): array
     {
         $operationsForUri = [];
-        foreach ($router::getRoutes() as $route) {
-            /** @var IlluminateRoute $route */
+
+        /** @var array<Route> $routes */
+        $routes = $router->getRoutes();
+        foreach ($routes as $route) {
             if (str_starts_with($urlGenerator->to($route->uri()), $server->url()) === false) {
                 continue;
             }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Schemas;
 
+use LaravelJsonApi\Contracts\Schema\Field;
+use LaravelJsonApi\Contracts\Schema\Filter;
 use LaravelJsonApi\Core\Schema\Schema;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
@@ -17,6 +19,9 @@ class PostSchema extends Schema
 {
     public static string $model = PostModel::class;
 
+    /**
+     * @return array<int, Field>
+     */
     public function fields(): iterable
     {
         return [
@@ -33,6 +38,9 @@ class PostSchema extends Schema
         ];
     }
 
+    /**
+     * @return iterable<Filter>
+     */
     public function filters(): iterable
     {
         return [

@@ -16,14 +16,24 @@ class UrlBuilder
     {
         $variablesWithOptions = [];
         foreach ($variables as $variable) {
+            if ($variable->enum === null || $variable->objectId === null) {
+                continue;
+            }
+
             if (count($variable->enum) > 1) {
                 $variablesWithOptions[] = $variable;
-                $serverPattern          = preg_replace('/{(?<prefix>[^}]*)' . $variable->objectId . '(?<suffix>[^}]*)}/', '${1}{' . $variable->objectId . '}${2}', $serverPattern);
+                $newServerPattern       = preg_replace('/{(?<prefix>[^}]*)' . $variable->objectId . '(?<suffix>[^}]*)}/', '${1}{' . $variable->objectId . '}${2}', $serverPattern);
+                if ($newServerPattern !== null) {
+                    $serverPattern = $newServerPattern;
+                }
                 continue;
             }
 
             if (count($variable->enum) === 1) {
-                $serverPattern = preg_replace('/{(?<prefix>[^}]*)' . $variable->objectId . '(?<suffix>[^}]*)}/', '${1}' . array_values($variable->enum)[0] . '${2}', $serverPattern);
+                $newServerPattern = preg_replace('/{(?<prefix>[^}]*)' . $variable->objectId . '(?<suffix>[^}]*)}/', '${1}' . array_values($variable->enum)[0] . '${2}', $serverPattern);
+                if ($newServerPattern !== null) {
+                    $serverPattern = $newServerPattern;
+                }
             }
         }
 
@@ -37,11 +47,17 @@ class UrlBuilder
             }
 
             if ($remainingVariableDefinition === OpenApiPathBaseUri::OBJECT_ID) {
-                $serverPattern = preg_replace('/{(?<prefix>[^}]*)' . OpenApiPathBaseUri::OBJECT_ID. '(?<suffix>[^}]*)}/', '${1}' . $baseUri . '${2}', $serverPattern);
+                $newServerPattern = preg_replace('/{(?<prefix>[^}]*)' . OpenApiPathBaseUri::OBJECT_ID. '(?<suffix>[^}]*)}/', '${1}' . $baseUri . '${2}', $serverPattern);
+                if ($newServerPattern !== null) {
+                    $serverPattern = $newServerPattern;
+                }
                 continue;
             }
 
-            $serverPattern = preg_replace('/{[^}]*' . $remainingVariableDefinition . '[^}]*}/', '', $serverPattern);
+            $newServerPattern = preg_replace('/{[^}]*' . $remainingVariableDefinition . '[^}]*}/', '', $serverPattern);
+            if ($newServerPattern !== null) {
+                $serverPattern = $newServerPattern;
+            }
         }
 
         return $serverDocumentation->variables(... $variablesWithOptions)->url($serverPattern);

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Builders\Path;
 
+use GoldSpecDigital\ObjectOrientedOAS\Objects\AnyOf;
 use PHPUnit\Framework\TestCase;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder;
 use LaravelJsonApi\Core\Server\Server;
@@ -80,7 +81,7 @@ class RouteParamsBuilderTest extends TestCase
                 (new Parameter())
                     ->in('query')
                     ->name('filter[foo]')
-                    ->schema(Schema::string())
+                    ->schema((new AnyOf())->schemas(Schema::string(), Schema::integer(), Schema::boolean()))
             ],
             RouteParamsBuilder::build($server, $route)
         );

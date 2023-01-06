@@ -6,11 +6,12 @@ namespace PrinsFrank\JsonapiOpenapiSpecGenerator;
 use GoldSpecDigital\ObjectOrientedOAS\OpenApi;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
 use LaravelJsonApi\Core\Server\Server;
 use LaravelJsonApi\Core\Support\AppResolver;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Components\ComponentsBuilder;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\ClassNotFoundException;
+use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\InvalidConfigurationException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\InvalidServerException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\JsonapiOpenapiSpecGeneratorException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\MissingConfigurationException;
@@ -49,17 +50,21 @@ class OpenApiSpecGenerator
             throw new VersionNotFoundException('No api server configured with name "' . $serverName . '"');
         }
 
+        if (is_string($apiVersionFQN) === false) {
+            throw new InvalidConfigurationException('Expected a FQN for "jsonapi.servers.' . $serverName . '" config key, got "' . gettype($apiVersionFQN) . '"');
+        }
+
         if (class_exists($apiVersionFQN) === false) {
             throw new ClassNotFoundException('Api server class "' . $apiVersionFQN . '" for "' . $serverName . '" doesn\'t exist');
         }
 
-        $appResolver = $this->application->get(AppResolver::class);
+        $appResolver = $this->application->make(AppResolver::class);
         $server      = new $apiVersionFQN($appResolver, $serverName);
         if ($server instanceof Server === false) {
             throw new InvalidServerException('Server is not an instance of "' . Server::class . '"');
         }
 
-        $router       = $this->application->get(Route::class);
+        $router       = $this->application->make(Router::class);
         $urlGenerator = $this->application->make(UrlGenerator::class);
         return OpenApi::create()
             ->openapi(OpenApi::OPENAPI_3_0_2)

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature;
 
 use Generator;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Routing\Controller;
 use LaravelJsonApi\Laravel\Routing\Registrar;
 use LaravelJsonApi\Laravel\ServiceProvider;
 use Orchestra\Testbench\TestCase;
@@ -29,6 +31,8 @@ class FeatureTest extends TestCase
 
     /**
      * @dataProvider scenarios
+     * @param self::SERVER_NAME_* $serverName
+     * @param array<Controller> $controllers
      * @throws \JsonException
      * @throws JsonapiOpenapiSpecGeneratorException
      */
@@ -65,12 +69,18 @@ class FeatureTest extends TestCase
         yield [self::SERVER_NAME_SIMPLE, ['posts' => PostController::class]];
     }
 
-    protected function defineEnvironment($app): void
+    /**
+     * @inheritDoc
+     */
+    protected function defineEnvironment($application): void
     {
-        $app['config']->set('jsonapi.servers', self::SERVERS);
+        $application->make(Repository::class)->set('jsonapi.servers', self::SERVERS);
     }
 
-    protected function getPackageProviders($app): array
+    /**
+     * @inheritDoc
+     */
+    protected function getPackageProviders($application): array
     {
         return [
             ServiceProvider::class,

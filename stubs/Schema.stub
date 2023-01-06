@@ -1,0 +1,15 @@
+<?php
+declare(strict_types=1);
+
+namespace LaravelJsonApi\Contracts\Schema;
+
+use LaravelJsonApi\Contracts\Pagination\Paginator;
+use LaravelJsonApi\Contracts\Store\Repository;
+use Traversable;
+
+/**
+ * @extends \Traversable<Schema>
+ */
+interface Schema extends Traversable
+{
+}

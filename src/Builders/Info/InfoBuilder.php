@@ -28,12 +28,19 @@ class InfoBuilder
             }
 
             $info = match (get_class($attribute)) {
+                /** @phpstan-ignore-next-line */
                 OpenApiContact::class        => $info->contact((new Contact())->url($attribute->url)->name($attribute->name)->email($attribute->email)),
+                /** @phpstan-ignore-next-line */
                 OpenApiDescription::class    => $info->description($attribute->description),
+                /** @phpstan-ignore-next-line */
                 OpenApiLicense::class        => $info->license((new License())->name($attribute->name)->url($attribute->url)),
+                /** @phpstan-ignore-next-line */
                 OpenApiTermsOfService::class => $info->termsOfService($attribute->termsOfService),
+                /** @phpstan-ignore-next-line */
                 OpenApiTitle::class          => $info->title($attribute->title),
+                /** @phpstan-ignore-next-line */
                 OpenApiVersion::class        => $info->version($attribute->version),
+                default                      => $info,
             };
         }
 

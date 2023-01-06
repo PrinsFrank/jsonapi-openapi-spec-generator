@@ -33,6 +33,9 @@ class OpenApiSpecGeneratorServiceProvider extends ServiceProvider implements Def
         );
     }
 
+    /**
+     * @return array<string|class-string>
+     */
     public function provides(): array
     {
         return [
