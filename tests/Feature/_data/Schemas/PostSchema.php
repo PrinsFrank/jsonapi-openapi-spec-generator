@@ -11,6 +11,7 @@ use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Models\PostModel;
+use LaravelJsonApi\Eloquent\Filters\Where;
 
 class PostSchema extends Schema
 {
@@ -30,5 +31,13 @@ class PostSchema extends Schema
             Str::make('title')->sortable(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
+    }
+
+    public function filters(): iterable
+    {
+	    return [
+		    Where::make('id')->singular(),
+		    Where::make('author_id'),
+	    ];
     }
 }
