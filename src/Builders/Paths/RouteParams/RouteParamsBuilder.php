@@ -9,6 +9,7 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\AnyOf;
 use Illuminate\Routing\Route;
 use LaravelJsonApi\Core\Server\Server;
+use LaravelJsonApi\Eloquent\Fields\Relations\Relation;
 
 class RouteParamsBuilder implements RouteParamsBuilderContract
 {
@@ -29,7 +30,8 @@ class RouteParamsBuilder implements RouteParamsBuilderContract
         if ($resourceType !== null && str_contains($route->getName() ?? '', 'index')) {
             $stringOrIntegerOrBoolean = (new AnyOf())->schemas(Schema::string(), Schema::integer(), Schema::boolean());
 
-            foreach ($server->schemas()->schemaFor($resourceType)->filters() as $filter) {
+            $schema = $server->schemas()->schemaFor($resourceType);
+            foreach ($schema->filters() as $filter) {
                 $routeParams[] = (new Parameter())
                     ->in('query')
                     ->name('filter[' . $filter->key() . ']')
@@ -38,7 +40,19 @@ class RouteParamsBuilder implements RouteParamsBuilderContract
                             ? $stringOrIntegerOrBoolean
                             : Schema::array()->items($stringOrIntegerOrBoolean)
                     );
-            }
+             }
+
+             $includes = [];
+	     foreach ($schema->relationships() as $relation) {
+                 $includes[] = $relation->name();
+	     }
+
+             if ($includes !== []) {
+                 $routeParams[] = (new Parameter())
+                     ->in('query')
+                     ->name('include')
+                     ->schema(Schema::string()->enum(...$includes));
+             }
         }
 
         return $routeParams;
