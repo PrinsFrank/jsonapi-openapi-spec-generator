@@ -40,19 +40,19 @@ class RouteParamsBuilder implements RouteParamsBuilderContract
                             ? $stringOrIntegerOrBoolean
                             : Schema::array()->items($stringOrIntegerOrBoolean)
                     );
-             }
+            }
 
-             $includes = [];
-	     foreach ($schema->relationships() as $relation) {
-                 $includes[] = $relation->name();
-	     }
+            $includes = [];
+            foreach ($schema->relationships() as $relation) {
+                $includes[] = $relation->name();
+            }
 
-             if ($includes !== []) {
-                 $routeParams[] = (new Parameter())
-                     ->in('query')
-                     ->name('include')
-                     ->schema(Schema::string()->enum(...$includes));
-             }
+            if ($includes !== []) {
+                $routeParams[] = (new Parameter())
+                    ->in('query')
+                    ->name('include')
+                    ->schema(Schema::string()->enum(...$includes));
+            }
         }
 
         return $routeParams;
