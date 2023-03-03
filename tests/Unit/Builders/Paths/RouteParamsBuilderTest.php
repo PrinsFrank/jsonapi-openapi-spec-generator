@@ -13,6 +13,7 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use LaravelJsonApi\Contracts\Schema\Container as SchemaContainerContract;
 use LaravelJsonApi\Core\Schema\Schema as JsonApiSchema;
 use LaravelJsonApi\Eloquent\Filters\Where;
+use LaravelJsonApi\Eloquent\Fields\Relations\Relation;
 
 /**
  * @coversDefaultClass \PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder
@@ -82,6 +83,39 @@ class RouteParamsBuilderTest extends TestCase
                     ->in('query')
                     ->name('filter[foo]')
                     ->schema((new AnyOf())->schemas(Schema::string(), Schema::integer(), Schema::boolean()))
+            ],
+            (new RouteParamsBuilder())->build($server, $route)
+        );
+    }
+
+    /**
+     * @covers ::build
+     */
+    public function testBuildRelation(): void
+    {
+        $relation = $this->createMock(Relation::class);
+        $relation->expects(self::once())->method('name')->willReturn('tags');
+
+        $schema = $this->createMock(JsonApiSchema::class);
+        $schema->expects(self::once())->method('relationships')->willReturn([$relation]);
+
+        $schemaContainer = $this->createMock(SchemaContainerContract::class);
+        $schemaContainer->expects(self::once())->method('schemaFor')->with('posts')->willReturn($schema);
+
+        $server = $this->createMock(Server::class);
+        $server->expects(self::once())->method('schemas')->willReturn($schemaContainer);
+
+        $route = $this->createMock(Route::class);
+        $route->expects(self::once())->method('uri')->willReturn('/foo');
+        $route->expects(self::once())->method('getName')->willReturn('index');
+        $route->defaults['resource_type'] = 'posts';
+
+        self::assertEquals(
+            [
+                (new Parameter())
+                    ->in('query')
+                    ->name('include')
+                    ->schema(Schema::string()->enum('tags'))
             ],
             (new RouteParamsBuilder())->build($server, $route)
         );
