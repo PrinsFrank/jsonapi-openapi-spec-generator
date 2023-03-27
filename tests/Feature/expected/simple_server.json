@@ -52,6 +52,18 @@
                                 ]
                             }
                         }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "schema": {
+                            "enum": [
+                                "author",
+                                "comments",
+                                "tags"
+                            ],
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
