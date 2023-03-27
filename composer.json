@@ -12,8 +12,8 @@
     },
     "require": {
         "php": "^8.0",
-        "laravel-json-api/laravel": "^2.1",
-        "illuminate/support": "^8.0 || ^9.0",
+        "laravel-json-api/laravel": "^2.1 || ^3.0",
+        "illuminate/support": "^8.0 || ^9.0 || ^10.0",
         "goldspecdigital/oooas": "^2.8"
     },
     "autoload": {
