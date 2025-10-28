@@ -15,6 +15,6 @@ return (new PhpCsFixer\Config())->setRules(
     ]
 )->setFinder(
     PhpCsFixer\Finder::create()
-                     ->exclude('vendor')
-                     ->in(__DIR__)
+        ->exclude('vendor')
+        ->in(__DIR__)
 );
