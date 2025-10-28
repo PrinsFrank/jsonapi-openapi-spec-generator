@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Unit\Builders\Path;
+namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Unit\Builders\Paths;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\AnyOf;
 use PHPUnit\Framework\TestCase;
