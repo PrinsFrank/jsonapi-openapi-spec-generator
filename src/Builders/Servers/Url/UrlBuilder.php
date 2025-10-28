@@ -38,7 +38,7 @@ class UrlBuilder implements UrlBuilderContract
         }
 
         preg_match_all('/{[^}]*?([A-z]+)[^}]*?}/', $serverPattern, $remainingVariableDefinitions);
-        foreach ($remainingVariableDefinitions[1] ?? [] as $remainingVariableDefinition) {
+        foreach ($remainingVariableDefinitions[1] as $remainingVariableDefinition) {
             $existingVariables = array_map(static function ($variable) {
                 return $variable->objectId;
             }, $variables);
