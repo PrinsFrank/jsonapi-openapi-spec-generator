@@ -24,7 +24,7 @@ class SchemaBuilder implements SchemaBuilderContract
         ];
 
         foreach ($server->schemas()->types() as $schemaType) {
-            /** @var Schema $schemaForType */
+            /** @phpstan-ignore varTag.nativeType *//** @var Schema $schemaForType */
             $schemaForType = $server->schemas()->schemaFor($schemaType);
             $properties    = [];
             foreach ($schemaForType->fields() as $field) {
