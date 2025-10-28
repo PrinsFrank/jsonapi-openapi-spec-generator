@@ -14,7 +14,7 @@
         "php": "^8.3",
         "laravel-json-api/laravel": "^5.0",
         "illuminate/support": "^11.0 || ^12.0",
-        "goldspecdigital/oooas": "^2.8"
+        "goldspecdigital/oooas": "dev-fix-implicitly-marking-parameter-as-nullable-deprecations"
     },
     "autoload": {
         "psr-4": {
@@ -44,5 +44,11 @@
             "@feature",
             "@cs"
         ]
+    },
+    "repositories": {
+        "oooas": {
+            "type": "vcs",
+            "url": "https://github.com/PrinsFrank/goldspecdigital-oooas"
+        }
     }
 }
