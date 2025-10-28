@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller;
 use LaravelJsonApi\Laravel\Routing\Registrar;
 use LaravelJsonApi\Laravel\ServiceProvider;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Exception\JsonapiOpenapiSpecGeneratorException;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\OpenApiSpecGenerator;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\OpenApiSpecGeneratorServiceProvider;
@@ -17,9 +19,7 @@ use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Servers\EmptyServ
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Feature\_data\Servers\SimpleServer;
 use RuntimeException;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class FeatureTest extends TestCase
 {
     private const SERVER_NAME_EMPTY = 'empty_server';
@@ -32,12 +32,12 @@ class FeatureTest extends TestCase
     ];
 
     /**
-     * @dataProvider scenarios
      * @param self::SERVER_NAME_* $serverName
-     * @param array<Controller> $controllers
+     * @param array<string, Controller> $controllers
      * @throws \JsonException
      * @throws JsonapiOpenapiSpecGeneratorException
      */
+    #[DataProvider('scenarios')]
     public function testScenarios(string $serverName, array $controllers): void
     {
         if ($this->app === null) {
@@ -66,10 +66,18 @@ class FeatureTest extends TestCase
             file_put_contents($expectedPath, $output);
         }
 
-        static::assertFileEquals($expectedPath, $actualPath);
+        $expectedOutput = file_get_contents($expectedPath);
+        static::assertNotFalse($expectedOutput);
+
+        $actualOutput = file_get_contents($actualPath);
+        static::assertNotFalse($actualOutput);
+        static::assertSame(
+            trim($expectedOutput),
+            trim($actualOutput),
+        );
     }
 
-    public function scenarios(): Generator
+    public static function scenarios(): Generator
     {
         yield [self::SERVER_NAME_EMPTY, []];
         yield [self::SERVER_NAME_SIMPLE, ['posts' => PostController::class]];
