@@ -8,6 +8,8 @@ use LaravelJsonApi\Core\Server\Server;
 
 class EmptyServer extends Server
 {
+    protected string $baseUri = '/api';
+
     /**
      * @return array<class-string<Schema>>
      */
