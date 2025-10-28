@@ -76,7 +76,7 @@ class Attribute
         foreach ($reflection->getAttributes() as $reflectionAttribute) {
             $attributeInstance = $reflectionAttribute->newInstance();
 
-            if ($attributeInstance instanceof $attributeFQN && $attributeInstance instanceof OpenApiAttribute) {
+            if ($attributeInstance instanceof $attributeFQN) {
                 return $attributeInstance;
             }
         }
