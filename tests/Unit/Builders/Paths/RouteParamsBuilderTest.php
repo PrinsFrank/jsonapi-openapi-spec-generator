@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace PrinsFrank\JsonapiOpenapiSpecGenerator\Tests\Unit\Builders\Paths;
 
 use GoldSpecDigital\ObjectOrientedOAS\Objects\AnyOf;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder;
 use LaravelJsonApi\Core\Server\Server;
@@ -15,14 +17,9 @@ use LaravelJsonApi\Core\Schema\Schema as JsonApiSchema;
 use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Fields\Relations\Relation;
 
-/**
- * @coversDefaultClass \PrinsFrank\JsonapiOpenapiSpecGenerator\Builders\Paths\RouteParams\RouteParamsBuilder
- */
+#[CoversClass(RouteParamsBuilder::class)]
 class RouteParamsBuilderTest extends TestCase
 {
-    /**
-     * @covers ::build
-     */
     public function testBuildNone(): void
     {
         $route = $this->createMock(Route::class);
@@ -34,9 +31,6 @@ class RouteParamsBuilderTest extends TestCase
         );
     }
 
-    /**
-     * @covers ::build
-     */
     public function testBuildUrlParameter(): void
     {
         $route = $this->createMock(Route::class);
@@ -54,9 +48,6 @@ class RouteParamsBuilderTest extends TestCase
         );
     }
 
-    /**
-     * @covers ::build
-     */
     public function testBuildFilters(): void
     {
         $filter = $this->createMock(Where::class);
@@ -88,9 +79,6 @@ class RouteParamsBuilderTest extends TestCase
         );
     }
 
-    /**
-     * @covers ::build
-     */
     public function testBuildRelation(): void
     {
         $relation = $this->createMock(Relation::class);
